@@ -1,18 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Slot } from 'expo-router';
+import { Stack } from 'expo-router'
+import { View, Text } from 'react-native'
+import React from 'react'
 
-import Demo from './components/demo';
-import "../global.css"
-
-//Hello
-export default function App() {
-    return (
-        <View className="flex flex-col justify-center items-center h-screen">
-            <Text className="text-red-500 text-[30px]">General college app</Text>
-            <StatusBar style="auto" />
-            <Demo/>
-        </View>
-    );
+const RootLayout = () => {
+  return (
+    <Stack>
+        <Stack.Screen name="(tabs)" options={{
+            headerShown : false,
+        }}/>
+    </Stack>
+  )
 }
 
+export default RootLayout
