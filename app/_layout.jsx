@@ -5,7 +5,7 @@ import { Slot } from 'expo-router';
 import Demo from './components/demo';
 import "../global.css"
 
-
+//Hello
 export default function App() {
     return (
         <View className="flex flex-col justify-center items-center h-screen">
