@@ -4,18 +4,24 @@ import { Tabs } from 'expo-router'
 const TabsLayout = () => {
   return (
     <Tabs>
-        <Tabs.Screen name="addItem" options={{
-            headerShown : false,
-            title : 'Add/Remove Item',
-        }} />
         <Tabs.Screen name="home" options={{
             headerShown : false,
             title : 'Home',
         }} />
+        <Tabs.Screen name="items" options={{
+            headerShown : false,
+            title : 'Items',
+        }}/>
+        <Tabs.Screen name="addItem" options={{
+            headerShown : false,
+            title : 'Add/Remove Item',
+        }} />
+        
         <Tabs.Screen name="profile" options={{
             headerShown : false,
             title : 'Profile',
         }}/>
+        
     </Tabs>
   )
 }

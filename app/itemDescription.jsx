@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const LostAndFound = () => {
+const ItemDescription = () => {
   return (
     <View>
-      <Text>LostAndFound</Text>
+      <Text>ItemDescription</Text>
     </View>
   )
 }
 
-export default LostAndFound
+export default ItemDescription

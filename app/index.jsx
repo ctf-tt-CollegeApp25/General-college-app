@@ -7,9 +7,9 @@ const IndexPage = () => {
   return (
     <View>
       <Text className='text-2xl'>IndexPage</Text>
-      <Text className='text-red-800'>Hello</Text>
-      <Demo name="Raj"/>
-      <Link href="/home" className='text-3xl'>Click-Me Home</Link>
+      <Text className='text-green-300 '>Hello</Text>
+      <Demo/>
+      <Link href="/home" className='text-3xl font-pregular'>Lost And Found</Link>
     </View>
   )
 }
