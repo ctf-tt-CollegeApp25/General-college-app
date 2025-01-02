@@ -1,13 +1,19 @@
-import { View, Text } from 'react-native'
+import { View, Text,ScrollView } from 'react-native'
 import React from 'react'
-import LostAndFound from '../../components/LostAndFound';
-const HomePage = () => {
+import { StatusBar } from 'expo-status-bar';
+const Home = () => {
   return (
-    <View>
-      <Text>HomePage</Text>
-      <LostAndFound/>
-    </View>
+    <>
+        <View className="h-9">
+            <StatusBar style="dark" />
+        </View>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <View>
+                <Text>Hello</Text>
+            </View>
+        </ScrollView>
+    </>
   )
 }
 
-export default HomePage
+export default Home
