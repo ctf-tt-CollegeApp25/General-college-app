@@ -10,11 +10,11 @@ import * as ImagePicker from 'expo-image-picker'
 
 const AddMarkString = ({sMark, onDel}) => {
 	return(
-		<View className='flex flex-row justify-between items-center h-[40px] w-[300px] border-[1px] bg-white border-[#1a1a1a] rounded-[10px]'>
+		<View className='flex flex-row justify-between items-center h-[40px] w-[300px] border-[1px] bg-white border-quaternary rounded-[10px]'>
 			<Text className='w-[200px] ml-2'>{sMark}</Text>
 			<TouchableOpacity
 				onPress={onDel}
-				className='w-10 h-full bg-[#5700ff] rounded-[10px] justify-center'
+				className='w-10 h-full bg-primary rounded-[10px] justify-center'
 			>
 				<Text className='text-[20px] text-center text-white'>X</Text>
 			</TouchableOpacity>
@@ -123,19 +123,19 @@ const AddItemPage = () => {
 		}
 	}
 
-	const Textstyle = 'text-[18px] my-2 text-[#4d4d4d] font-medium'
-	const InputStyle = ' bg-white h-[45px] w-[250px] border-[1px] border-[#1a1a1a] rounded-[10px] pl-4 my-2'
+	const Textstyle = 'text-[18px] my-2 text-secondary font-pmedium'
+	const InputStyle = ' bg-white h-[45px] w-[250px] border-[1px] border-quaternary rounded-[10px] pl-4 my-2'
 
 	//5700FF  ---  1A1A1A --- 4D4D4D
 
 	return (
-		<SafeAreaView className="flex-1 bg-[#EEEBE5] flex-row justify-center items-center">
+		<SafeAreaView className="flex-1 bg-tertiary flex-row justify-center items-center">
 			<ScrollView contentContainerStyle={{ flexGrow: 1 }} className="flex">
 				<View className="flex-1 flex-col p-4 items-center justify-center">
 
-					<Text className='text-[30px] font-semibold text-[#4d4d4d] text-center m-5'>Report Lost or Found</Text>
+					<Text className='text-[30px] font-psemibold text-secondary text-center m-5'>Report Lost or Found</Text>
 
-					<View className='flex-1 flex-col justify-center items-center'>
+					<View className='flex-1 flex-col justify-center ml-4'>
 
 						<View>
 							<Text className={Textstyle}>Item Name : </Text>
@@ -181,7 +181,7 @@ const AddItemPage = () => {
 								render={({field : { onChange, value}}) => (
 									<View>
 										<TouchableOpacity onPress={() => setOpen(true)}>
-											<Text className='pt-[13px] pl-4  bg-white border-[1px] border-[#1a1a1a] rounded-[10px] h-[45px] w-[250px]'>
+											<Text className='pt-[13px] pl-4  bg-white border-[1px] border-quaternary rounded-[10px] h-[45px] w-[250px]'>
 												{value ? new Date(value).toLocaleString() : "Select a date"}
 											</Text>
 										</TouchableOpacity>
@@ -245,7 +245,7 @@ const AddItemPage = () => {
 								control={control}
 								defaultValue=""
 								render={({ field: { onChange, value } }) => (
-									<View className="h-[60px] w-[200px] bg-white rounded-[20px] border-[1px] border-[#1a1a1a]">
+									<View className="h-[60px] w-[200px] bg-white rounded-[20px] border-[1px] border-quaternary">
 										<Picker
 											selectedValue={value}
 											onValueChange={onChange} // Update value when picker changes
@@ -271,7 +271,7 @@ const AddItemPage = () => {
 									value={mark}
 								/>
 								<TouchableOpacity
-									className='h-[35px] w-[80px] mt-[13px] bg-[#5700ff] text-[#eeebe5] rounded-[5px] justify-center items-center'
+									className='h-[35px] w-[80px] mt-[13px] bg-primary text-tertiary rounded-[5px] justify-center items-center'
 									onPress={() => handleSpecialMark(mark)}
 								>
 									<Text className='text-center text-white'>Add Mark</Text>
@@ -312,13 +312,13 @@ const AddItemPage = () => {
 						
 						<View className='flex flex-row justify-center'>
 							<TouchableOpacity
-								className='bg-[#5700ff] h-[50px] w-[150px] rounded-[10px] justify-center m-5'
+								className='bg-primary h-[50px] w-[150px] rounded-[10px] justify-center m-5'
 								onPress={pickImage}
 							>
 								<Text className='text-white text-center'>Upload Image</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-								className='bg-[#5700ff] h-[50px] w-[150px] rounded-[10px] justify-center m-5'
+								className='bg-primary h-[50px] w-[150px] rounded-[10px] justify-center m-5'
 								onPress={takePhoto}
 							>
 								<Text className='text-white text-center'>Take Photo</Text>
@@ -335,7 +335,7 @@ const AddItemPage = () => {
 						
 						<View className='flex flex-row justify-center'>
 							<TouchableOpacity
-								className='bg-[#5700ff]  h-[50px] w-[150px] rounded-[10px] justify-center mt-6'
+								className='bg-primary  h-[50px] w-[150px] rounded-[10px] justify-center mt-6'
 								activeOpacity={0.7}
 								onPress={handleSubmit(onsubmit)}
 								>

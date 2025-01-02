@@ -4,7 +4,9 @@ import React from 'react'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
 import { StatusBar } from "expo-status-bar";
+
 SplashScreen.preventAutoHideAsync();
+
 const RootLayout = () => {
   
   const [fontsLoaded ,error] = useFonts({
@@ -13,6 +15,7 @@ const RootLayout = () => {
       "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
       "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
   })
+
   useEffect(() => {
       if(error){
           console.log(error)
@@ -21,11 +24,15 @@ const RootLayout = () => {
   },[fontsLoaded,error]);
 
   if(!fontsLoaded && !error) return null;
+  
   return (
 
     <>
       <Stack>
           <Stack.Screen name="(tabs)" options={{
+              headerShown : false,
+          }}/>
+          <Stack.Screen name="(auth)" options={{
               headerShown : false,
           }}/>
       </Stack>
