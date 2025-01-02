@@ -80,8 +80,7 @@ const Home = () => {
 
     return (
         <>
-            <View className="h-9">
-                <StatusBar style="dark" />
+            <View className="h-9 bg-tertiary">
             </View>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="bg-tertiary p-4">
                 <View className="flex flex-row bg-white w-full h-12 rounded-lg px-2 mb-4 items-center justify-between">
