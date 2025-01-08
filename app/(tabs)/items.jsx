@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text,SafeAreaView, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import images from '../../constants';
 import { useEffect } from 'react';
@@ -80,6 +80,7 @@ const Home = () => {
 
     return (
         <>
+        <SafeAreaView className="bg-tertiary h-full">
             <View className="h-9 bg-tertiary">
             </View>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="bg-tertiary p-4">
@@ -102,11 +103,11 @@ const Home = () => {
                             {items.map((item) => (
                                 <View
                                     key={item.id}
-                                    className="bg-white w-64 rounded-lg mr-4 p-2 shadow-lg"
+                                    className="bg-white w-64 rounded-lg mr-4 p-2 shadow-lg border-2 border-black"
                                 >
                                     <Image
                                         source={item.image}
-                                        className="w-full h-48 rounded-lg mb-2"
+                                        className="w-full h-48 rounded-lg mb-2 "
                                         resizeMode="cover"
                                     />
                                     <Text className="text-xl font-psemibold mb-1 text-quadernary">{item.item_name}</Text>
@@ -122,6 +123,7 @@ const Home = () => {
                     </View>
                 ))}
             </ScrollView>
+            </SafeAreaView>
         </>
     );
 };
