@@ -9,8 +9,8 @@ import { Ionicons } from '@expo/vector-icons'
 
 const SignUp = () => {
 
-	const[show, setShow] = useState(false)
-	const[show1, setShow1] = useState(false)
+	const[show, setShow] = useState(true)
+	const[show1, setShow1] = useState(true)
 
 
 	const signUpschema = z.object({
@@ -19,8 +19,8 @@ const SignUp = () => {
 		phone_number : z.string()
 					.length(10, 'Phone number must be exactly 10 characters')
 					.regex(/^\d{10}$/, 'Phone number must contain only digits'),
-		password : z.string(),
-		cpassword : z.string()
+		password : z.string().min(8, 'Password Should contain 8 Characters'),
+		cpassword : z.string().min(8, 'Password Should contain 8 Characters')
 	}).refine(data => data.cpassword === data.password, {
 		message:'The Passwords does\'nt match',
 		path:["cpassword"]
