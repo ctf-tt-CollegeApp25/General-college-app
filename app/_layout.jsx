@@ -5,6 +5,8 @@ import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
 import { StatusBar } from "expo-status-bar";
 
+import '../global.css'
+
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
