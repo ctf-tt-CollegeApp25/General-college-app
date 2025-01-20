@@ -18,7 +18,14 @@ const Home = () => {
             targetPage: 'itemDescription', 
             publishedDate: '2024-12-29', 
             username: 'JohnDoe', 
-            contact_number: '1234567890' 
+            contact_number: '1234567890',
+            description: `Now is the winter of our discontent Made glorious summer by this sun
+of York; And all the clouds that lour'd upon our house In the deep bosom of the ocean buried. Now are our brows bound with victorious wreaths; Our bruised arms hung up for monuments;
+Our stern alarums changed to merry meetings, Our dreadful marches to delightful measures.
+Grim-visaged war hath smooth'd his wrinkled front; And now, instead of mounting barded steeds To fright the souls of fearful adversaries, He capers nimbly in a lady's chamber To the lascivious pleasing of a lute.
+But I, that am not shaped for sportive tricks, Nor made to court an amorous looking-glass; I, that
+am rudely stamp'd, and want love's majesty To strut before a wanton
+ambling nymph; I, that am curtail'd of this fair proportion,`
         },
         { 
             id: 2, 
@@ -114,7 +121,9 @@ const Home = () => {
                                     <Text className="text-m text-quadernary font-medium">Lost Near: {item.lostNear}</Text>
                                     {/* <Text className="text-m text-primary">Username: {item.username}</Text>
                                     <Text className="text-m primary">Contact: {item.contact_number}</Text> */}
-                                    <TouchableOpacity onPress={() => navigation.navigate(item.targetPage)}>
+                                    <TouchableOpacity onPress={() => navigation.navigate(item.targetPage , {
+                                        itemDetails: item
+                                    })}>
                                         <Text className="text-center text-purple-500 mt-2 font-medium">See more details</Text>
                                     </TouchableOpacity>
                                 </View>
