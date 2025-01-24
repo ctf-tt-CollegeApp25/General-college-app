@@ -35,7 +35,8 @@ ambling nymph; I, that am curtail'd of this fair proportion,`
             targetPage: 'itemDescription', 
             publishedDate: '2024-12-29', 
             username: 'JaneSmith', 
-            contact_number: '9876543210' 
+            contact_number: '9876543210',
+            description : "This camera was found near Red Building"
         },
         { 
             id: 3, 

@@ -38,7 +38,7 @@ const RootLayout = () => {
               headerShown : false,
           }}/>
           <Stack.Screen name = "itemDescription" options={{
-              headerShown : false,
+            title : "Description"
           }}/>
       </Stack>
     </>

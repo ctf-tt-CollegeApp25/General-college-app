@@ -82,7 +82,7 @@ const SignIn = () => {
           </View>
 
           <View className="flex items-center mt-4">
-            <TouchableOpacity onPress={() => router.push('/forgot-password')}>
+            <TouchableOpacity onPress={() => router.push('/forget-password')}>
               <Text className="text-sm text-blue-500">Forgot Password?</Text>
             </TouchableOpacity>
           </View>
