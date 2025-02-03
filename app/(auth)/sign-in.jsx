@@ -4,10 +4,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { z } from 'zod';
-
+import axios from 'axios';
+import env from "../../env";
 const validationSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  email_id: z.string().email('Invalid email address'),
   password: z
     .string()
     .min(6, 'Password must be at least 6 characters')
@@ -23,12 +25,24 @@ const SignIn = () => {
   } = useForm({
     resolver: zodResolver(validationSchema),
   });
-
+  const API_URL = env.API_URL;
   const onSubmit = async (data) => {
-    console.log('Form Data:', data);
-    setTimeout(() => {
-      router.push('/home');
-    }, 2000);
+    try {
+      const response = await axios.post(`${API_URL}/login`, data);
+      //console.log(response.data);
+      if (response.status === 200) {
+          const { token } = response.data;
+          if (token) {
+            await AsyncStorage.setItem('authToken', token);
+            router.push('/items');
+            console.log("Logged in successfully");
+          } else {
+            console.error("Token is missing in the response");
+          }
+      }
+    } catch (error) {
+      console.error("Error during login:", error.response?.data || error.message);
+    }
   };
 
   return (
@@ -44,7 +58,7 @@ const SignIn = () => {
             <View className="mt-4">
               <Text className="text-lg font-psemibold text-secondary">Email</Text>
               <Controller
-                name="email"
+                name="email_id"
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
@@ -57,7 +71,7 @@ const SignIn = () => {
                   />
                 )}
               />
-              {errors.email && <Text className="text-red-500 mt-1">{errors.email.message}</Text>}
+              {errors.email_id && <Text className="text-red-500 mt-1">{errors.email_id.message}</Text>}
             </View>
 
             <View className="mt-4">

@@ -37,7 +37,7 @@ const ItemDescription = () => {
           <ScrollView className="p-4">
             <View className="bg-tertiary p-6 rounded-lg shadow-md mb-5">
               <Image
-                source={itemDetails.image }
+                source={{uri : itemDetails.image}}
                 className="w-full h-64 rounded-lg mb-4"
                 resizeMode="cover"
               />

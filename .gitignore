@@ -8,7 +8,11 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+# app config
+app.config.js
 
+# environment config
+env.js
 # Native
 *.orig.*
 *.jks
