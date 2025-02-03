@@ -4,87 +4,47 @@ import { useNavigation } from '@react-navigation/native';
 import images from '../../constants';
 import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-
+import axios from "axios";
+import env from "../../env";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home = () => {
+    
+    const API_URL = env.API_URL;
     const navigation = useNavigation();
     const [searchItem, setSearchItem] = useState('');
+    const [items, setItems] = useState([]);
+    console.log(API_URL);
+    const getItems = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/lost-and-found/items`);
+            setItems(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    useEffect(() => {
+        getItems();
+    }, []);
+    //console.log(items);
 
-    const items = [
-        { 
-            id: 1, 
-            image: images.keys, 
-            item_name: 'Keys', 
-            lostNear: 'Red Building', 
-            targetPage: 'itemDescription', 
-            publishedDate: '2024-12-29', 
-            username: 'JohnDoe', 
-            contact_number: '1234567890',
-            description: `Now is the winter of our discontent Made glorious summer by this sun
-of York; And all the clouds that lour'd upon our house In the deep bosom of the ocean buried. Now are our brows bound with victorious wreaths; Our bruised arms hung up for monuments;
-Our stern alarums changed to merry meetings, Our dreadful marches to delightful measures.
-Grim-visaged war hath smooth'd his wrinkled front; And now, instead of mounting barded steeds To fright the souls of fearful adversaries, He capers nimbly in a lady's chamber To the lascivious pleasing of a lute.
-But I, that am not shaped for sportive tricks, Nor made to court an amorous looking-glass; I, that
-am rudely stamp'd, and want love's majesty To strut before a wanton
-ambling nymph; I, that am curtail'd of this fair proportion,`
-        },
-        { 
-            id: 2, 
-            image: images.camera, 
-            item_name: 'Camera', 
-            lostNear: 'Knowledge Park', 
-            targetPage: 'itemDescription', 
-            publishedDate: '2024-12-29', 
-            username: 'JaneSmith', 
-            contact_number: '9876543210',
-            description : "This camera was found near Red Building"
-        },
-        { 
-            id: 3, 
-            image: images.credit, 
-            item_name: 'Credit Card', 
-            lostNear: 'Library', 
-            targetPage: 'DetailsPage', 
-            publishedDate: '2024-12-28', 
-            username: 'AliceBrown', 
-            contact_number: '5555555555' 
-        },
-        { 
-            id: 4, 
-            image: images.headphones, 
-            item_name: 'Headphones', 
-            lostNear: 'IT Department', 
-            targetPage: 'ProfilePage', 
-            publishedDate: '2024-12-28', 
-            username: 'BobGreen', 
-            contact_number: '6666666666' 
-        },
-        { 
-            id: 5, 
-            image: images.credit, 
-            item_name: 'Credit Card', 
-            lostNear: 'Library', 
-            targetPage: 'DetailsPage', 
-            publishedDate: '2024-12-30', 
-            username: 'AliceBrown', 
-            contact_number: '5555555555' 
-        },
-        { 
-            id: 6, 
-            image: images.headphones, 
-            item_name: 'Headphones', 
-            lostNear: 'IT Department', 
-            targetPage: 'ProfilePage', 
-            publishedDate: '2024-12-30', 
-            username: 'BobGreen', 
-            contact_number: '6666666666' 
-        },
-    ];
-
+   
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0'); 
+        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+        const year = String(date.getFullYear()).slice(-2);
+    
+        return `${day} ${month} ${year}`;
+    };
+    
     const groupedItems = items.reduce((acc, item) => {
-        acc[item.publishedDate] = acc[item.publishedDate] || [];
-        acc[item.publishedDate].push(item);
+        const formattedDate = formatDate(item.created_at);
+        acc[formattedDate] = acc[formattedDate] || [];
+        acc[formattedDate].push(item);
+    
         return acc;
     }, {});
+    
 
     return (
         <>
@@ -110,19 +70,19 @@ ambling nymph; I, that am curtail'd of this fair proportion,`
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                             {items.map((item) => (
                                 <View
-                                    key={item.id}
+                                    key={item.item_id}
                                     className="bg-white w-64 rounded-lg mr-4 p-2 shadow-lg border-2 border-black"
                                 >
                                     <Image
-                                        source={item.image}
+                                        source={{ uri: item.image }}
                                         className="w-full h-48 rounded-lg mb-2 "
                                         resizeMode="cover"
                                     />
                                     <Text className="text-xl font-psemibold mb-1 text-quadernary">{item.item_name}</Text>
-                                    <Text className="text-m text-quadernary font-medium">Lost Near: {item.lostNear}</Text>
+                                    <Text className="text-m text-quadernary font-medium">Lost Near: {item.location}</Text>
                                     {/* <Text className="text-m text-primary">Username: {item.username}</Text>
                                     <Text className="text-m primary">Contact: {item.contact_number}</Text> */}
-                                    <TouchableOpacity onPress={() => navigation.navigate(item.targetPage , {
+                                    <TouchableOpacity onPress={() => navigation.navigate("itemDescription" , {
                                         itemDetails: item
                                     })}>
                                         <Text className="text-center text-purple-500 mt-2 font-medium">See more details</Text>

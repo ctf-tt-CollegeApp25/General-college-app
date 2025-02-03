@@ -7,7 +7,9 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form';
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import * as ImagePicker from 'expo-image-picker'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import env from "../../env";
 const AddMarkString = ({sMark, onDel}) => {
 	return(
 		<View className='flex flex-row justify-between items-center h-[40px] w-[300px] border-[1px] bg-white border-quaternary rounded-[10px]'>
@@ -32,6 +34,32 @@ const AddItemPage = () => {
 	const[imageSuccess, setImageSuccess] = useState(false);
 	
 	const[image, setImage] = useState(null)
+	const API_URL = env.API_URL;
+	const postItem = async(data) => {
+		console.log(data);
+		const formData = new FormData();
+		formData.append('item_name', data.item_name)
+		formData.append('user_name', data.user_name)
+		formData.append('date_of_upload', data.date_of_upload)
+		formData.append('contact_number', data.contact_number)
+		formData.append('location', data.location)
+		formData.append('reason', data.reason)
+		formData.append('description', data.description)
+		formData.append('special_marks', JSON.stringify(data.special_marks))
+		formData.append('image', {
+			uri: image,
+			name: 'image.jpg',
+			type: 'image/jpg'
+		})
+		console.log(formData)
+		const response = await axios.post(`${API_URL}/lost-and-found/post`, formData, {
+			headers: {
+				'Authorization': `Bearer ${authToken}`,
+				'Content-Type': 'multipart/form-data'
+			}
+		})
+		console.log(response.data)
+	}
 
 	const postItemSchema = z.object({
 		item_name: z.string().min(5, 'Item must contain atleast 5 Characters'),
@@ -82,6 +110,8 @@ const AddItemPage = () => {
 		reset()
 		setSpecialMarks([])
 		setImage(null)
+		console.log(data);
+		postItem(data)
 	}
 
 	const pickImage = async() => {
