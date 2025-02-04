@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'expo-router';
 import { useForm, Controller } from 'react-hook-form'
 import { Link } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
-
+import axios from 'axios';
+import env from "../../env";
 const SignUp = () => {
-
+	const router = useRouter();
 	const[show, setShow] = useState(true)
 	const[show1, setShow1] = useState(true)
 
@@ -31,10 +33,20 @@ const SignUp = () => {
 		resolver:zodResolver(signUpschema)
 	})
 
+	const API_URL = env.API_URL;
+	const onSignUp = async (data) => {
+		try{
+			const response = await axios.post(`${API_URL}/register`, data)
+			if(response.status === 200){
+				router.push('/items')
+				console.log("Signed Up Successfully");
+			} else {
+				console.log("Error during Sign Up");
+			}
 
-	const onSignUp = (data) => {
-		reset()
-		console.log(data)
+		} catch(error){
+			console.error("Error during Sign Up:", error.response?.data || error.message)
+		}
 	}
 
 	const Textstyle = 'text-[18px] my-2 text-secondary font-pmedium'
