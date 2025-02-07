@@ -8,6 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import * as ImagePicker from 'expo-image-picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import env from "../../env";
 const AddMarkString = ({sMark, onDel}) => {
@@ -26,7 +27,7 @@ const AddMarkString = ({sMark, onDel}) => {
 
 const AddItemPage = () => {
 
-	
+	const navigation = useNavigation();
 	const [special_marks, setSpecialMarks] = useState([]);
 	const[open, setOpen] = useState(false)
 	const[mark, setMark] = useState('')
@@ -35,31 +36,47 @@ const AddItemPage = () => {
 	
 	const[image, setImage] = useState(null)
 	const API_URL = env.API_URL;
-	const postItem = async(data) => {
-		console.log(data);
+	const postItem = async (data) => {
 		const formData = new FormData();
-		formData.append('item_name', data.item_name)
-		formData.append('user_name', data.user_name)
-		formData.append('date_of_upload', data.date_of_upload)
-		formData.append('contact_number', data.contact_number)
-		formData.append('location', data.location)
-		formData.append('reason', data.reason)
-		formData.append('description', data.description)
-		formData.append('special_marks', JSON.stringify(data.special_marks))
-		formData.append('image', {
-			uri: image,
+		formData.append('item_name', data.item_name);
+		formData.append('user_name', data.user_name);
+		formData.append('contact_number', data.contact_number);
+		formData.append('location', data.location);
+		formData.append('reason', data.reason);
+		formData.append('description', data.description);
+		formData.append('special_marks', data.special_marks);
+		const imageFile = {
+			uri: image, 
 			name: 'image.jpg',
-			type: 'image/jpg'
-		})
-		console.log(formData)
-		const response = await axios.post(`${API_URL}/lost-and-found/post`, formData, {
+			type: 'image/jpeg'
+		  };
+		  formData.append('image', imageFile);
+		const token = await AsyncStorage.getItem('authToken');
+		console.log('Token:', token);
+		try {
+		  const response = await axios.post(`${API_URL}/lost-and-found/post`, formData, {
 			headers: {
-				'Authorization': `Bearer ${authToken}`,
-				'Content-Type': 'multipart/form-data'
+			  'Authorization': `Bearer ${token}`,
+			  'Content-Type': 'multipart/form-data'
 			}
-		})
-		console.log(response.data)
-	}
+		  });
+		  console.log('Upload Successful', response.data);
+		  navigation.goBack();
+		} catch (error) {
+		  console.error('Error:', error.response?.data || error.message);
+		}
+	  };
+	  const onSubmit = (data) => {
+		if (!image) {
+		  setImageSuccess(true);
+		  return;
+		}
+		setImageSuccess(false);
+		postItem({ ...data, image });
+		reset();
+		setSpecialMarks([]);
+		setImage(null);
+	  };
 
 	const postItemSchema = z.object({
 		item_name: z.string().min(5, 'Item must contain atleast 5 Characters'),
@@ -99,20 +116,7 @@ const AddItemPage = () => {
 		setValue('special_marks', updatedVal)
 	}
 
-	const onsubmit = (data) => {
-		if(!image){
-			setImageSuccess(true);
-			return;
-		}
-		setImageSuccess(false);
-		console.log(data)
-		console.log(image)
-		reset()
-		setSpecialMarks([])
-		setImage(null)
-		console.log(data);
-		postItem(data)
-	}
+	
 
 	const pickImage = async() => {
 		const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -232,7 +236,7 @@ const AddItemPage = () => {
 							)}
 						</View>
 						<View>
-							<Text className={Textstyle}>Location of Found : </Text>
+							<Text className={Textstyle}>Location of Lost/Found : </Text>
 							<Controller
 								control={control}
 								name='location'
@@ -367,7 +371,7 @@ const AddItemPage = () => {
 							<TouchableOpacity
 								className='bg-primary  h-[50px] w-[150px] rounded-[10px] justify-center mt-6'
 								activeOpacity={0.7}
-								onPress={handleSubmit(onsubmit)}
+								onPress={handleSubmit(onSubmit)}
 								>
 								<Text className='text-center text-white'>Post</Text>
 							</TouchableOpacity>

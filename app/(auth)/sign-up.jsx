@@ -38,7 +38,7 @@ const SignUp = () => {
 		try{
 			const response = await axios.post(`${API_URL}/register`, data)
 			if(response.status === 200){
-				router.push('/items')
+				router.push('/sign-in')
 				console.log("Signed Up Successfully");
 			} else {
 				console.log("Error during Sign Up");
