@@ -62,7 +62,7 @@ const SignIn = () => {
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
-                    className="w-[300px] h-12 border-2 border-secondary rounded-xl px-2 mt-2"
+                    className="w-[300px] h-12 border-2 border-secondary rounded-xl px-2 mt-2 bg-white"
                     placeholder="Enter your email"
                     placeholderTextColor="black"
                     onBlur={onBlur}
@@ -81,7 +81,7 @@ const SignIn = () => {
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
-                    className="w-[300px] h-12 border-2 border-secondary rounded-xl px-2 mt-2"
+                    className="w-[300px] h-12 border-2 border-secondary rounded-xl px-2 mt-2 bg-white"
                     placeholder="Enter your password"
                     placeholderTextColor="black"
                     secureTextEntry
@@ -96,7 +96,7 @@ const SignIn = () => {
           </View>
 
           <View className="flex items-center mt-4">
-            <TouchableOpacity onPress={() => router.push('/forget-password')}>
+            <TouchableOpacity onPress={() => router.push('/otp-section')}>
               <Text className="text-sm text-blue-500">Forgot Password?</Text>
             </TouchableOpacity>
           </View>

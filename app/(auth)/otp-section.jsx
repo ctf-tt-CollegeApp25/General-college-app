@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {z} from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { router } from "expo-router";
 
 export default function App() {
 
@@ -46,6 +47,7 @@ const handleVerifyOTP = () => {
 		return;
 	}
 	setOtpErr('')
+	router.push('/forget-password')
 };
 
 	const mobileSchema = z.object({
