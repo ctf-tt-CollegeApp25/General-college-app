@@ -15,6 +15,9 @@ import axios from 'axios';
 import env from '../../env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import PlusButton from '../../components/plusButton'
+import { router } from 'expo-router';
+
 const Home = () => {
   const API_URL = env.API_URL;
   const navigation = useNavigation();
@@ -123,7 +126,12 @@ const Home = () => {
             </ScrollView>
           </View>
         ))}
+        <PlusButton
+          onPress={() => router.push('/addItem')}
+          postionStyle='relative top-[650px] left-[280px]'
+        />
       </ScrollView>
+      
     </SafeAreaView>
   );
 };

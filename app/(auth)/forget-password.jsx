@@ -5,6 +5,7 @@ import {z} from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { Ionicons } from '@expo/vector-icons'
+import { router } from "expo-router";
 
 
 const ChangePassword = () => {
@@ -16,6 +17,7 @@ const ChangePassword = () => {
     const handleChange = () => {
     
         Alert.alert("Success", "Password changed successfully.");
+        router.push('/sign-in')
     };
 
     const passwordSchema = z.object({
