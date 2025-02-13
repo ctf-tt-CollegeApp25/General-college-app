@@ -1,26 +1,42 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert} from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; 
 import Feather from '@expo/vector-icons/Feather';
 import { Link } from 'expo-router';
 import { Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-
+import axios from 'axios';
+import env from '../../env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Profile = () => {
   const [editMode, setEditMode] = useState(false);
   const [userDetails, setUserDetails] = useState({
-    username: 'John Doe',
-    email: 'johndoe@example.com',
-    phone: '123-456-7890',
+    user_name: 'John Doe',
+    email_id: 'johndoe@example.com',
+    phone_number: '123-456-7890',
   });
 
   const handleInputChange = (field, value) => {
     setUserDetails({ ...userDetails, [field]: value });
   };
-
-  const saveChanges = () => {
-    setEditMode(false)
+  const API_URL = env.API_URL;
+  const saveChanges = async () => {
+	try{
+		setEditMode(false)
+		const token = await AsyncStorage.getItem('authToken');
+		const response = await axios.patch(`${API_URL}/profile`, userDetails, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		
+		if(response.status === 200){
+			Alert.alert('Success', 'Profile updated successfully');
+		}
+	} catch(error){
+		Alert.alert('Error', error.response?.data?.error || 'Failed to update profile');
+    	setEditMode(true);
+  	}
+	
   };
 
   return (
@@ -49,11 +65,11 @@ const Profile = () => {
 						{editMode ? (
 							<TextInput
 								className="border border-gray-300 rounded p-2 mt-1 text-gray-800 bg-white"
-								value={userDetails.username}
-								onChangeText={(text) => handleInputChange("username", text)}
+								value={userDetails.user_name}
+								onChangeText={(text) => handleInputChange("user_name", text)}
 							/>
 							) : (
-							<Text className="text-[16px]  text-gray-800 mt-1">{userDetails.username}</Text>
+							<Text className="text-[16px]  text-gray-800 mt-1">{userDetails.user_name}</Text>
 						)}
 					</View>
 
@@ -62,11 +78,11 @@ const Profile = () => {
 						{editMode ? (
 						<TextInput
 							className="border border-gray-300 rounded p-2 mt-1 text-gray-800 bg-white"
-							value={userDetails.email}
-							onChangeText={(text) => handleInputChange("email", text)}
+							value={userDetails.email_id}
+							onChangeText={(text) => handleInputChange("email_id", text)}
 						/>
 						) : (
-						<Text className="text-lg text-gray-800 mt-1">{userDetails.email}</Text>
+						<Text className="text-lg text-gray-800 mt-1">{userDetails.email_id}</Text>
 						)}
 					</View>
 
@@ -75,11 +91,11 @@ const Profile = () => {
 						{editMode ? (
 						<TextInput
 							className="border border-gray-300 rounded p-2 mt-1 text-gray-800 bg-white"
-							value={userDetails.phone}
-							onChangeText={(text) => handleInputChange("phone", text)}
+							value={userDetails.phone_number}
+							onChangeText={(text) => handleInputChange("phone_number", text)}
 						/>
 						) : (
-						<Text className="text-lg text-gray-800 mt-1">{userDetails.phone}</Text>
+						<Text className="text-lg text-gray-800 mt-1">{userDetails.phone_number}</Text>
 						)}
 					</View>
 

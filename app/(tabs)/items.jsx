@@ -89,14 +89,14 @@ const Home = () => {
 
         {sortedDateKeys.map((dateKey) => (
           <View key={dateKey} className="mb-6">
-            <Text className="text-xl font-pbold text-secondary mb-4">
+            <Text className="text-xl font-pbold text-primary mb-4">
               {formatDisplayDate(dateKey)}
             </Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {groupedItems[dateKey].map((item) => (
                 <View
                   key={item.item_id}
-                  className="bg-white w-64 rounded-lg mr-4 p-2 shadow-lg border-2 border-black"
+                  className="bg-white w-64 rounded-lg mr-4 p-2 shadow-lg"
                 >
                   <Image
                     source={{ uri: item.image }}
