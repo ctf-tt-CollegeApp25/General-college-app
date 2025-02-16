@@ -5,9 +5,9 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        primary : '#5700ff',
-        secondary : '#4d4d4d',
-        tertiary : '#eeebe5',
+        primary : '#4ade80',
+        secondary : '#9ca3af',
+        tertiary : '#ffffff',
         quaternary : '#1a1a1a',
       },
       fontFamily:{
@@ -22,3 +22,9 @@ module.exports = {
   
 }
 
+//#A7E0FC blue -1
+//#bae6fd blue 2
+//#38bdf8 blue 3
+
+
+//#9ca3af grey -400

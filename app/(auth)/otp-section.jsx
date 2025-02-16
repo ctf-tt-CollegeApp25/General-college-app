@@ -120,7 +120,7 @@ return (
 							<TextInput
 								key={index}
 								ref={otpRefs[index]} // Assign ref to each input
-								className='h-[50px] w-[50px] rounded-[10px] bg-white text-center text-primary border-secondary border-[2px] font-bold text-[18px]'
+								className='h-[50px] w-[50px] rounded-[10px] bg-white text-center text-quaternary border-secondary border-[2px] font-bold text-[18px]'
 								keyboardType="numeric"
 								maxLength={1}
 								value={digit}

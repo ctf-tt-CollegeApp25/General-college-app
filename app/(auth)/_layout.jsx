@@ -6,16 +6,16 @@ const AuthLayout = () => {
   return (
     <Stack>
         <Stack.Screen name="sign-in" options={{
-            headerShown : false,
+            headerShown : true,
         }}/>
         <Stack.Screen name="sign-up" options={{
-            headerShown : false,
+            headerShown : true,
         }}/>
         <Stack.Screen name="otp-section" options={{
-            headerShown : false,
+            headerShown : true,
         }}/>
         <Stack.Screen name="forget-password" options={{
-            headerShown : false,
+            headerShown : true,
         }}/>
     </Stack>
   )

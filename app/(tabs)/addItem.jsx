@@ -10,14 +10,18 @@ import * as ImagePicker from 'expo-image-picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import env from "../../env";
+import Navbar from '../../components/navbar';
+// import env from "../../env";
+
+import SlideUpMessage from '../../components/successMessage'
+
 const AddMarkString = ({sMark, onDel}) => {
 	return(
 		<View className='flex flex-row justify-between items-center h-[40px] w-[300px] border-[1px] bg-white border-quaternary rounded-[10px]'>
 			<Text className='w-[200px] ml-2'>{sMark}</Text>
 			<TouchableOpacity
 				onPress={onDel}
-				className='w-10 h-full bg-primary rounded-[10px] justify-center'
+				className='w-10 h-full bg-red-400 rounded-[10px] justify-center'
 			>
 				<Text className='text-[20px] text-center text-white'>X</Text>
 			</TouchableOpacity>
@@ -33,49 +37,52 @@ const AddItemPage = () => {
 	const[mark, setMark] = useState('')
 	const[markErr, setMarkErr] = useState(false)
 	const[imageSuccess, setImageSuccess] = useState(false);
+
+	const[success, setSuccess] = useState(false)
 	
 	const[image, setImage] = useState(null)
-	const API_URL = env.API_URL;
-	const postItem = async (data) => {
-		const formData = new FormData();
-		formData.append('item_name', data.item_name);
-		formData.append('user_name', data.user_name);
-		formData.append('contact_number', data.contact_number);
-		formData.append('location', data.location);
-		formData.append('reason', data.reason);
-		formData.append('description', data.description);
-		formData.append('special_marks', data.special_marks);
-		const imageFile = {
-			uri: image, 
-			name: 'image.jpg',
-			type: 'image/jpeg'
-		  };
-		  formData.append('image', imageFile);
-		const token = await AsyncStorage.getItem('authToken');
-		console.log('Token:', token);
-		try {
-		  const response = await axios.post(`${API_URL}/lost-and-found/post`, formData, {
-			headers: {
-			  'Authorization': `Bearer ${token}`,
-			  'Content-Type': 'multipart/form-data'
-			}
-		  });
-		  console.log('Upload Successful', response.data);
-		  navigation.goBack();
-		} catch (error) {
-		  console.error('Error:', error.response?.data || error.message);
-		}
-	  };
+	// const API_URL = env.API_URL;
+	// const postItem = async (data) => {
+	// 	const formData = new FormData();
+	// 	formData.append('item_name', data.item_name);
+	// 	formData.append('user_name', data.user_name);
+	// 	formData.append('contact_number', data.contact_number);
+	// 	formData.append('location', data.location);
+	// 	formData.append('reason', data.reason);
+	// 	formData.append('description', data.description);
+	// 	formData.append('special_marks', data.special_marks);
+	// 	const imageFile = {
+	// 		uri: image, 
+	// 		name: 'image.jpg',
+	// 		type: 'image/jpeg'
+	// 	  };
+	// 	  formData.append('image', imageFile);
+	// 	const token = await AsyncStorage.getItem('authToken');
+	// 	console.log('Token:', token);
+	// 	try {
+	// 	  const response = await axios.post(`${API_URL}/lost-and-found/post`, formData, {
+	// 		headers: {
+	// 		  'Authorization': `Bearer ${token}`,
+	// 		  'Content-Type': 'multipart/form-data'
+	// 		}
+	// 	  });
+	// 	  console.log('Upload Successful', response.data);
+	// 	  navigation.goBack();
+	// 	} catch (error) {
+	// 	  console.error('Error:', error.response?.data || error.message);
+	// 	}
+	//   };
 	  const onSubmit = (data) => {
 		if (!image) {
 		  setImageSuccess(true);
 		  return;
 		}
 		setImageSuccess(false);
-		postItem({ ...data, image });
+		// postItem({ ...data, image });
 		reset();
 		setSpecialMarks([]);
 		setImage(null);
+		setSuccess(true)
 	  };
 
 	const postItemSchema = z.object({
@@ -157,19 +164,20 @@ const AddItemPage = () => {
 		}
 	}
 
-	const Textstyle = 'text-[18px] my-2 text-secondary font-pmedium'
-	const InputStyle = ' bg-white h-[45px] w-[250px] border-[1px] border-quaternary rounded-[10px] pl-4 my-2'
+	const Textstyle = 'text-[18px] my-2 text-quaternary font-pmedium ml-2'
+	const InputStyle = ' bg-white h-[45px] w-[250px] border-[1px] border-quaternary rounded-[10px] pl-4 my-2 ml-2'
 
 	//5700FF  ---  1A1A1A --- 4D4D4D
 
 	return (
-		<SafeAreaView className="flex-1 bg-tertiary flex-row justify-center items-center">
+		<SafeAreaView className="flex-1 bg-tertiary flex-col justify-center items-center">
 			<ScrollView contentContainerStyle={{ flexGrow: 1 }} className="flex">
-				<View className="flex-1 flex-col p-4 items-center justify-center">
+				<Navbar/>
+				<View className="flex-1 flex-col  items-center justify-center">
 
-					<Text className='text-[30px] font-psemibold text-secondary text-center m-5'>Report Lost or Found</Text>
+					<Text className='text-[30px] font-psemibold text-quaternary text-center m-5'>Report Lost or Found</Text>
 
-					<View className='flex-1 flex-col justify-center ml-4'>
+					<View className='flex-1 flex-col justify-center '>
 
 						<View>
 							<Text className={Textstyle}>Item Name : </Text>
@@ -344,15 +352,15 @@ const AddItemPage = () => {
 							)}
 						</View>
 						
-						<View className='flex flex-row justify-center'>
+						<View className='flex flex-row justify-center items-center gap-[20px]'>
 							<TouchableOpacity
-								className='bg-primary h-[50px] w-[150px] rounded-[10px] justify-center m-5'
+								className='bg-primary h-[50px] w-[150px] rounded-[10px] justify-center my-5'
 								onPress={pickImage}
 							>
 								<Text className='text-white text-center'>Upload Image</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-								className='bg-primary h-[50px] w-[150px] rounded-[10px] justify-center m-5'
+								className='bg-primary h-[50px] w-[150px] rounded-[10px] justify-center my-5'
 								onPress={takePhoto}
 							>
 								<Text className='text-white text-center'>Take Photo</Text>
@@ -369,7 +377,7 @@ const AddItemPage = () => {
 						
 						<View className='flex flex-row justify-center'>
 							<TouchableOpacity
-								className='bg-primary  h-[50px] w-[150px] rounded-[10px] justify-center mt-6'
+								className='bg-primary  h-[50px] w-[150px] rounded-[10px] justify-center my-6'
 								activeOpacity={0.7}
 								onPress={handleSubmit(onSubmit)}
 								>
@@ -380,6 +388,11 @@ const AddItemPage = () => {
 
 				</View>
 			</ScrollView>
+			<SlideUpMessage 
+                message="🎉 Item Posted Successfully!"
+                visible={success}
+                onHide={() => setSuccess(false)}
+            />
 		</SafeAreaView>
 	);
 	};

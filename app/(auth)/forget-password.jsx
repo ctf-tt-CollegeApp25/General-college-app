@@ -38,7 +38,7 @@ const ChangePassword = () => {
                 <View className='flex-1 flex-col justify-center items-center bg-tertiary gap-[20px]'>
                     <View>
                         <Text
-                            className='text-[18px]  text-secondary font-pmedium'
+                            className='text-[18px]  text-quaternary font-pmedium'
                         >New Password</Text>
                         <Controller
                             name="new_password"
@@ -69,7 +69,7 @@ const ChangePassword = () => {
 
                     <View>
                         <Text
-                            className='text-[18px] text-secondary font-pmedium'
+                            className='text-[18px] text-quaternary font-pmedium'
                         >
                             Confirm Password
                         </Text>
