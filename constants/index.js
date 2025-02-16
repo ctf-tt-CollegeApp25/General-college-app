@@ -35,6 +35,7 @@ import Coop from "../assets/images/Coop.png";
 import Ocean from "../assets/images/Ocean.png";
 import WR from "../assets/images/WR.png";
 import Chemistry from "../assets/images/Chemistry.png";
+import ctflogo from '../assets/images/ctflogo.png'
 export default{
     search,
     camera,
@@ -72,5 +73,6 @@ export default{
     Coop,
     Ocean,
     WR,
-    Chemistry
+    Chemistry,
+    ctflogo
 }

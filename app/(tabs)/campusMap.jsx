@@ -1,8 +1,11 @@
 import { View, Text, ScrollView, Linking , Image } from 'react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import images from '../../constants'
-import { Link } from 'expo-router'
+import { Link, useFocusEffect } from 'expo-router'
+import { useState, useEffect } from 'react'
+import LocationIcon from '../../components/location'
+import Navbar from '../../components/navbar'
 
 
 const Place = (props) => {
@@ -41,9 +44,23 @@ const Place = (props) => {
 }
 
 const CampusMap = () => {
+
+    const[load, setLoad] = useState(false)
+
+    useFocusEffect(
+        useCallback(() => {
+            setLoad(false)
+           const timer =  setTimeout(() => setLoad(true), 3000)
+
+           return () => clearTimeout(timer)
+        }, [])
+    )
+
     return (
         <SafeAreaView className='flex-1 flex-row justify-center items-center bg-tertiary'>
+            {load ?
             <ScrollView contentContainerStyle={{flexGrow : 1}} className='flex'>
+                <Navbar/>
                 <View
                     className='flex-1 flex-col items-center'
                 >
@@ -93,6 +110,7 @@ const CampusMap = () => {
                     </View>
                 </View>
             </ScrollView>
+            :<LocationIcon/>}
         </SafeAreaView>
     )
 }

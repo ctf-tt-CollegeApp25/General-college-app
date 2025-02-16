@@ -40,6 +40,9 @@ const RootLayout = () => {
           <Stack.Screen name = "itemDescription" options={{
             title : "Description"
           }}/>
+          <Stack.Screen name='profile' options={{
+            title : "profile"
+          }}/>
       </Stack>
     </>
   )

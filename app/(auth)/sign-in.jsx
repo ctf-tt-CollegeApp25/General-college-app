@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { z } from 'zod';
 import axios from 'axios';
-import env from "../../env";
+// import env from "../../env";
 const validationSchema = z.object({
   email_id: z.string().email('Invalid email address'),
   password: z
@@ -25,24 +25,24 @@ const SignIn = () => {
   } = useForm({
     resolver: zodResolver(validationSchema),
   });
-  const API_URL = env.API_URL;
+  // const API_URL = env.API_URL;
   const onSubmit = async (data) => {
-    try {
-      const response = await axios.post(`${API_URL}/login`, data);
-      //console.log(response.data);
-      if (response.status === 200) {
-          const { token } = response.data;
-          if (token) {
-            await AsyncStorage.setItem('authToken', token);
-            router.push('/items');
-            console.log("Logged in successfully");
-          } else {
-            console.error("Token is missing in the response");
-          }
-      }
-    } catch (error) {
-      console.error("Error during login:", error.response?.data || error.message);
-    }
+    // try {
+    //   const response = await axios.post(`${API_URL}/login`, data);
+    //   //console.log(response.data);
+    //   if (response.status === 200) {
+    //       const { token } = response.data;
+    //       if (token) {
+    //         await AsyncStorage.setItem('authToken', token);
+    //         router.push('/items');
+    //         console.log("Logged in successfully");
+    //       } else {
+    //         console.error("Token is missing in the response");
+    //       }
+    //   }
+    // } catch (error) {
+    //   console.error("Error during login:", error.response?.data || error.message);
+    // }
   };
 
   return (
