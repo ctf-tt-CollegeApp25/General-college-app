@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import Navbar from '../../components/navbar';
-// import env from "../../env";
+import env from "../../env";
 
 import SlideUpMessage from '../../components/successMessage'
 
@@ -41,44 +41,44 @@ const AddItemPage = () => {
 	const[success, setSuccess] = useState(false)
 	
 	const[image, setImage] = useState(null)
-	// const API_URL = env.API_URL;
-	// const postItem = async (data) => {
-	// 	const formData = new FormData();
-	// 	formData.append('item_name', data.item_name);
-	// 	formData.append('user_name', data.user_name);
-	// 	formData.append('contact_number', data.contact_number);
-	// 	formData.append('location', data.location);
-	// 	formData.append('reason', data.reason);
-	// 	formData.append('description', data.description);
-	// 	formData.append('special_marks', data.special_marks);
-	// 	const imageFile = {
-	// 		uri: image, 
-	// 		name: 'image.jpg',
-	// 		type: 'image/jpeg'
-	// 	  };
-	// 	  formData.append('image', imageFile);
-	// 	const token = await AsyncStorage.getItem('authToken');
-	// 	console.log('Token:', token);
-	// 	try {
-	// 	  const response = await axios.post(`${API_URL}/lost-and-found/post`, formData, {
-	// 		headers: {
-	// 		  'Authorization': `Bearer ${token}`,
-	// 		  'Content-Type': 'multipart/form-data'
-	// 		}
-	// 	  });
-	// 	  console.log('Upload Successful', response.data);
-	// 	  navigation.goBack();
-	// 	} catch (error) {
-	// 	  console.error('Error:', error.response?.data || error.message);
-	// 	}
-	//   };
+	const API_URL = env.API_URL;
+	const postItem = async (data) => {
+		const formData = new FormData();
+		formData.append('item_name', data.item_name);
+		formData.append('user_name', data.user_name);
+		formData.append('contact_number', data.contact_number);
+		formData.append('location', data.location);
+		formData.append('reason', data.reason);
+		formData.append('description', data.description);
+		formData.append('special_marks', data.special_marks);
+		const imageFile = {
+			uri: image, 
+			name: 'image.jpg',
+			type: 'image/jpeg'
+		  };
+		  formData.append('image', imageFile);
+		const token = await AsyncStorage.getItem('authToken');
+		console.log('Token:', token);
+		try {
+		  const response = await axios.post(`${API_URL}/lost-and-found/post`, formData, {
+			headers: {
+			  'Authorization': `Bearer ${token}`,
+			  'Content-Type': 'multipart/form-data'
+			}
+		  });
+		  console.log('Upload Successful', response.data);
+		  navigation.goBack();
+		} catch (error) {
+		  console.error('Error:', error.response?.data || error.message);
+		}
+	  };
 	  const onSubmit = (data) => {
 		if (!image) {
 		  setImageSuccess(true);
 		  return;
 		}
 		setImageSuccess(false);
-		// postItem({ ...data, image });
+		postItem({ ...data, image });
 		reset();
 		setSpecialMarks([]);
 		setImage(null);
@@ -141,7 +141,7 @@ const AddItemPage = () => {
 		})
 
 		if (!result.canceled) {
-			setImage(result.assets[0].uri); // Set the selected image URI
+			setImage(result.assets[0].uri); 
 		}
 	}
 
@@ -160,14 +160,13 @@ const AddItemPage = () => {
 		});
 	
 		if (!result.canceled) {
-		setImage(result.assets[0].uri); // Set the taken photo URI
+		setImage(result.assets[0].uri);
 		}
 	}
 
 	const Textstyle = 'text-[18px] my-2 text-quaternary font-pmedium ml-2'
 	const InputStyle = ' bg-white h-[45px] w-[250px] border-[1px] border-quaternary rounded-[10px] pl-4 my-2 ml-2'
 
-	//5700FF  ---  1A1A1A --- 4D4D4D
 
 	return (
 		<SafeAreaView className="flex-1 bg-tertiary flex-col justify-center items-center">
@@ -290,7 +289,7 @@ const AddItemPage = () => {
 									<View className="h-[60px] w-[200px] bg-white rounded-[20px] border-[1px] border-quaternary">
 										<Picker
 											selectedValue={value}
-											onValueChange={onChange} // Update value when picker changes
+											onValueChange={onChange}
 											style={{ flex:1 }}
 											>
 											<Picker.Item label="Select Reason" value=""/>

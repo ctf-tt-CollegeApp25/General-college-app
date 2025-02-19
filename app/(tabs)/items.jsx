@@ -20,8 +20,7 @@ import { useFocusEffect } from 'expo-router';
 import PlusButton from '../../components/plusButton'
 import { router } from 'expo-router';
 import Navbar from '../../components/navbar';
-// const url = ['/', '/addItem', '/campusMap']
-
+import { LinearGradient } from 'expo-linear-gradient';
 const Home = () => {
   const API_URL = env.API_URL;
   const navigation = useNavigation();
@@ -76,14 +75,14 @@ const Home = () => {
 
   const[load, setLoad] = useState(false)
 
-  useFocusEffect(
-    useCallback(() => {
+ useEffect(() => {
       setLoad(false)
       const timer = setTimeout(() => setLoad(true), 3000)
 
       return () => clearTimeout(timer)
-    }, [])
-  )
+    
+  }, [])
+
 
   return (
     <SafeAreaView className="bg-tertiary h-full">
@@ -93,7 +92,7 @@ const Home = () => {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="bg-tertiary p-4">
           <Navbar/>
           <TouchableWithoutFeedback onPress={() => textInputRef.current?.focus()}>
-            <View className="flex flex-row bg-white w-full h-12 rounded-lg px-2 mb-4 items-center justify-between">
+            <View className="flex flex-row bg-white w-full h-12 rounded-lg px-2 mt-4 mb-4 items-center justify-between border-secondary border-2">
               <TextInput
                 ref={textInputRef}
                 onChangeText={(text) => setSearchItem(text)}
@@ -111,34 +110,39 @@ const Home = () => {
               </Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {groupedItems[dateKey].map((item) => (
-                  <View
-                    key={item.item_id}
-                    className="bg-white w-64 rounded-lg mr-4 p-2 shadow-lg"
+                  <TouchableOpacity
+                  key={item.item_id}
+                  onPress={() => navigation.navigate('itemDescription', { itemDetails: item })}
+                  activeOpacity={0.9}
+                  className="mr-4 shadow-lg"
+                  style={{ borderRadius: 16, overflow: 'hidden' }}
+                >
+                  <LinearGradient
+                    colors={['#bae6fd', '#38bdf8']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    className="w-64 p-2"
+                    style={{ borderRadius: 16 }}
                   >
                     <Image
                       source={{ uri: item.image }}
-                      className="w-full h-48 rounded-lg mb-2"
+                      className="w-full h-48 mb-2"
                       resizeMode="cover"
+                      style={{ borderRadius: 16 }} 
                     />
-                    <Text className="text-xl font-psemibold mb-1 text-quaternary">
+                    <Text className="text-xl font-psemibold mb-1 text-white">
                       {item.item_name}
                     </Text>
                     <Text
                       style={{ textTransform: 'capitalize' }}
-                      className="text-m text-quadernary font-medium"
+                      className="text-m text-white font-pregular"
                     >
                       {item.reason} Near: {item.location}
                     </Text>
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('itemDescription', { itemDetails: item })
-                      }
-                    >
-                      <Text className="text-center text-purple-500 mt-2 font-medium">
-                        See more details
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                  </LinearGradient>
+                </TouchableOpacity>
+                
+                  
                 ))}
               </ScrollView>
             </View>
