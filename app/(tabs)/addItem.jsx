@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TextInput, TouchableOpacity, Button, Image } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, Button, Image, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { Picker } from '@react-native-picker/picker'
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -59,6 +59,10 @@ const AddItemPage = () => {
 		  formData.append('image', imageFile);
 		const token = await AsyncStorage.getItem('authToken');
 		console.log('Token:', token);
+		if(!token){
+			Alert.alert('Error', 'You must be logged in');
+			return;
+		}
 		try {
 		  const response = await axios.post(`${API_URL}/lost-and-found/post`, formData, {
 			headers: {
