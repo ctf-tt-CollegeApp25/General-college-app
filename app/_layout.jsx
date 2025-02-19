@@ -17,7 +17,7 @@ const RootLayout = () => {
     "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
   });
 
-  const [load, setLoad] = useState(true);
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     if (error) {

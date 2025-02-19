@@ -48,6 +48,8 @@ const Home = () => {
           ]}
         />
 
+        <Text className='text-center text-[#38bdf8] font-psemibold text-[18px] mt-[20px]'>CEG TECH FORUM</Text>
+
       </View>
     </View>
   );
