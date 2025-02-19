@@ -15,7 +15,7 @@ const ChangePassword = () => {
 
     const [show, setShow] = useState(true)
     const [show1, setShow1] = useState(true)
-
+    const API_URL = env.API_URL;
     const handleChange = async (data) => {
         try {
             const token = await AsyncStorage.getItem("authToken");

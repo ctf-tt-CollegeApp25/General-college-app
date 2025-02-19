@@ -12,8 +12,7 @@ import {z} from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { router } from "expo-router";
-import SlideUpMessage from "../../components/successMessage";
-
+import env from "../../env";
 export default function OTPVerification() {
 	const [otpVisible, setOtpVisible] = useState(false);
 	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -123,7 +122,6 @@ return (
 					)}
 			</View>
 
-				{/* OTP Boxes Appear Below */}
 				<View>
 					{otpVisible && (
 						<View
@@ -132,19 +130,20 @@ return (
 						<Text
 							className='text-[22px] text-quaternary font-psemibold my-4'
 						>Enter OTP</Text>
-						<View className='flex flex-row gap-[20px]'>
-							{otp.map((digit, index) => (
-							<TextInput
-								key={index}
-								ref={otpRefs[index]} // Assign ref to each input
-								className='h-[50px] w-[50px] rounded-[10px] bg-white text-center text-quaternary border-secondary border-[2px] font-bold text-[18px]'
-								keyboardType="numeric"
-								maxLength={1}
-								value={digit}
-								onChangeText={(text) => handleOTPChange(text, index)}
-							/>
-							))}
-						</View>
+						<View className='flex flex-row justify-between gap-4 w-full px-6'>
+            {otp.map((digit, index) => (
+              <TextInput
+                key={index}
+                ref={otpRefs[index]}
+                className='h-12 w-[13%] rounded-lg bg-white text-center text-quaternary border-secondary border-2 font-bold text-[18px]'
+                keyboardType="numeric"
+                maxLength={1}
+                value={digit}
+                onChangeText={(text) => handleOTPChange(text, index)}
+              />
+            ))}
+          </View>
+
 							{otpErr && (
 								<Text className='text-red-600 my-4'>{otpErr}</Text>
 							)}
@@ -168,12 +167,6 @@ return (
 						</View>
 					)}
 				</View>
-
-				<SlideUpMessage
-					message='OTP has beed sent to your Email'
-					visible={success}
-					onHide={() => setSuccess(false)}
-				/>
 			</View>
 		</ScrollView>
 	</SafeAreaView>
