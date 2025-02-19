@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "General-College-app",
-    "slug": "General-college-app",
+    "slug": "ceg-app",
     "scheme": "generalcollegeapp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,6 +17,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package" : "com.ctf.generalcollegeapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
@@ -27,6 +28,15 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c5562332-f837-48aa-9ea9-f9aa9a1de681"
+      }
+    },
+    "owner": "gogul11"
   }
 }
