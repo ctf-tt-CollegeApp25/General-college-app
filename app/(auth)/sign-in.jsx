@@ -31,17 +31,25 @@ const SignIn = () => {
       const response = await axios.post(`${API_URL}/login`, data);
       //console.log(response.data);
       if (response.status === 200) {
-          const { token } = response.data;
-          if (token) {
+        const { token, user_id } = response.data;
+        if (token && user_id) {
             await AsyncStorage.setItem('authToken', token);
+            await AsyncStorage.setItem('userId', user_id.toString()); 
             router.push('/items');
             console.log("Logged in successfully");
-          } else {
-            console.error("Token is missing in the response");
-          }
-      }
+        } else {
+            console.error("Token or user_id is missing in the response");
+        }
+    }
+    
     } catch (error) {
-      console.error("Error during login:", error.response?.data || error.message);
+      if (error.response) {
+        console.error("Login error:", error.response.data.message);
+        Alert.alert("Error", error.response.data.message || "Login failed");
+      } else {
+        console.error("Network error:", error);
+        Alert.alert("Error", "Unable to connect. Check your network.");
+      }
     }
   };
 
