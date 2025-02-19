@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "General-college-app",
-    "slug": "General-college-app",
-    "scheme": "General-college-app",
+    "name": "cegconnect",
+    "slug": "general-college-app",
+    "scheme": "cegconnect",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,12 +13,19 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "extra" : {
+      "eas" : {
+        "projectId": "00dc4ef7-d902-411c-aece-a7fc7264ef78"
+      }
+    },
     "ios": {
       "supportsTablet": true
     },
+    "owner" : "gogul11",
     "android": {
+      "package": "com.ctf.cegconnect",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       }
     },

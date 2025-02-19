@@ -6,10 +6,26 @@ import { StatusBar } from 'expo-status-bar'
 import { Link } from 'expo-router'
 import Navbar from '../../components/navbar'
 import AnimatedCard from '../../components/card'
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from 'expo-router'
 const Default = () => {
-
+    const [log, setLog] = useState(false);
+    useFocusEffect(
+        useCallback(() => {
+          const checkAuth = async () => {
+            try {
+              const token = await AsyncStorage.getItem("authToken");
+              setLog(!!token);
+            } catch (error) {
+              console.error("Error checking auth:", error);
+            }
+          };
+          
+          checkAuth();
+        }, [])
+      );
+      
+    
 
     const Option = ({content}) => {
 
@@ -28,8 +44,6 @@ const Default = () => {
             </TouchableOpacity>
         )
     }
-
-    const[log, setLog] = useState(false)
 
 return (
     <SafeAreaView className='flex-1 bg-tertiary'>
@@ -57,33 +71,25 @@ return (
 
                 <AnimatedCard/>
 
-                {!log && 
-                <View className='flex flex-col gap-[20px] '>
-                    <View>
-                        <TouchableOpacity
-                            className='h-[40px] w-[250px] bg-primary flex flex-col justify-center rounded-[10px]'
-                            >
-                            <Link
-                                className='text-white text-center'
-                                href='/sign-in'
-                            >SIGN IN</Link>
-
-                        </TouchableOpacity>
-                    </View>
-
-                    <View>
-                        <TouchableOpacity
-                            className='h-[40px] w-[250px] bg-primary flex flex-col justify-center rounded-[10px]'
-                            >
-                            <Link
-                                className='text-white text-center'
-                                href='/sign-up'
-                            >SIGN UP</Link>
-
-                        </TouchableOpacity>
-                    </View>
-                </View>
-               }
+                
+                {!log && (
+                        <View className='flex flex-col gap-[20px] '>
+                            <View>
+                                <TouchableOpacity className='h-[40px] w-[250px] bg-primary flex flex-col justify-center rounded-[10px]'>
+                                    <Link className='text-white text-center' href='/sign-in'>
+                                        SIGN IN
+                                    </Link>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity className='h-[40px] w-[250px] bg-primary flex flex-col justify-center rounded-[10px]'>
+                                    <Link className='text-white text-center' href='/sign-up'>
+                                        SIGN UP
+                                    </Link>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    )}
             
                 
             </View>

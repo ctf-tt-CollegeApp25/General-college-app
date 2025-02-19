@@ -36,7 +36,7 @@ const AnimatedCard = () => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: withTiming(animation.value ? 1.2 : 1)}],
+        transform: [{ scale: withTiming(animation.value ? 1.2 : 1) }]
     };
   });
 

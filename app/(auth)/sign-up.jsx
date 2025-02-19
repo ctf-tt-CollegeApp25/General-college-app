@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { Link } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import axios from 'axios';
-// import env from "../../env";
+import env from "../../env";
 const SignUp = () => {
 	const router = useRouter();
 	const[show, setShow] = useState(true)
@@ -33,20 +33,21 @@ const SignUp = () => {
 		resolver:zodResolver(signUpschema)
 	})
 
-	// const API_URL = env.API_URL;
+	const API_URL = env.API_URL;
 	const onSignUp = async (data) => {
-		// try{
-		// 	const response = await axios.post(`${API_URL}/register`, data)
-		// 	if(response.status === 200){
-		// 		router.push('/sign-in')
-		// 		console.log("Signed Up Successfully");
-		// 	} else {
-		// 		console.log("Error during Sign Up");
-		// 	}
+		console.log(data);
+		try{
+			const response = await axios.post(`${API_URL}/register`, data)
+			if(response.status === 200){
+				router.push('/sign-in')
+				console.log("Signed Up Successfully");
+			} else {
+				console.log("Error during Sign Up");
+			}
 
-		// } catch(error){
-		// 	console.error("Error during Sign Up:", error.response?.data || error.message)
-		// }
+		} catch(error){
+			console.error("Error during Sign Up:", error.response?.data || error.message)
+		}
 	}
 
 	const Textstyle = 'text-[18px] my-2 text-secondary font-pmedium'

@@ -17,14 +17,6 @@ const Navbar = () => {
                     resizeMode="contain"
                 />
             </TouchableOpacity>
-
-            {/* Profile Button */}
-            <TouchableOpacity
-                className='p-2'
-                onPress={() => router.push('profile')}
-            >
-                <FontAwesome6 name="user-secret" size={24} color="black" />
-            </TouchableOpacity>
         </View>
     );
 }

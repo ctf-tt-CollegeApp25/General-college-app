@@ -4,6 +4,8 @@ import { Tabs } from 'expo-router'
 import Feather from '@expo/vector-icons/Feather';
 import { LinearGradient } from 'expo-linear-gradient';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+
 
 const TabsLayout = () => {
   return (
@@ -50,11 +52,11 @@ const TabsLayout = () => {
                 <Feather name="map-pin" size={24} color={focused ? "white" : "#000"} />
             )
         }}/>
-        <Tabs.Screen name='evtracker' options={{
+        <Tabs.Screen name='profile' options={{
             headerShown : false,
-            title:'EV',
+            title:'Profile',
             tabBarIcon :({focused}) => (
-              <MaterialCommunityIcons name="bus-electric" size={24} color={focused ? "white" : "#000"} />
+              <FontAwesome6 name="user-secret" size={24} color={focused ? "#fff" : "#000"} />
             )
         }}/>
     </Tabs>
