@@ -49,9 +49,9 @@ const ItemDescription = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="p-4">
-        <View className="shadow-lg rounded-xl overflow-hidden">
+        <View className="shadow-lg rounded-xl overflow-hidden mt-[70px]">
           <LinearGradient
-            colors={['#bae6fd', '#38bdf8']}
+            colors={['#bae6fd', '#38bdf8', '#bae6fd','#38bdf8', '#bae6fd']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             className="p-6 rounded-xl"
@@ -61,22 +61,22 @@ const ItemDescription = () => {
               className="w-full h-64 rounded-xl mb-4"
               resizeMode="cover"
             />
-            <Text className="text-2xl font-pbold text-white mb-4">
+            <Text className="text-2xl font-pbold text-black mb-4">
               {itemDetails.item_name}
             </Text>
-            <Text className="text-lg font-pmedium text-white mb-2">
+            <Text className="text-lg font-pmedium text-black mb-2">
               <Text className="font-psemibold">Description: </Text>
               {itemDetails.description}
             </Text>
-            <Text className="text-lg font-pmedium text-white mb-2">
+            <Text className="text-lg font-pmedium text-black mb-2">
               <Text className="font-psemibold">Username: </Text>
               {itemDetails.user_name}
             </Text>
-            <Text className="text-lg font-pmedium text-white mb-2">
+            <Text className="text-lg font-pmedium text-black mb-2">
               <Text className="font-psemibold">Contact: </Text>
               {itemDetails.contact_number}
             </Text>
-            <Text className="text-lg font-pmedium text-white mb-2">
+            <Text className="text-lg font-pmedium text-black mb-2">
               <Text className="font-psemibold">Special Marks: </Text>
               {itemDetails.special_marks}
             </Text>

@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { router } from "expo-router";
 import env from "../../env";
+import SlideUpMessage from '../../components/successMessage'
 export default function OTPVerification() {
 	const [otpVisible, setOtpVisible] = useState(false);
 	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -32,6 +33,8 @@ export default function OTPVerification() {
 	});
   
 	const handleSendOTP = async (data) => {
+		setSuccess(true)
+		setOtpVisible(true);
 	  try {
 		const response = await fetch(`${API_URL}/send`, {
 		  method: "POST",
@@ -41,7 +44,6 @@ export default function OTPVerification() {
   
 		if (response.ok) {
 		  emailRef.current = data.email;
-		  setOtpVisible(true);
 		} else {
 		  alert("Failed to send OTP");
 		}
@@ -89,6 +91,8 @@ export default function OTPVerification() {
 		console.error("Error verifying OTP:", error);
 	  }
 	};
+
+	const[success, setSuccess] = useState(false)
 
 return (
 	<SafeAreaView className='flex-1 bg-tertiary flex-row justify-center items-center'>
@@ -167,6 +171,11 @@ return (
 						</View>
 					)}
 				</View>
+				<SlideUpMessage
+					message='OTP has beed sent to your Email'
+					visible={success}
+					onHide={() => setSuccess(false)}
+				/>
 			</View>
 		</ScrollView>
 	</SafeAreaView>

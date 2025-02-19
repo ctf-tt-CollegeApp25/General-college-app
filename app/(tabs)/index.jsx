@@ -7,6 +7,9 @@ import { Link } from 'expo-router'
 import Navbar from '../../components/navbar'
 import AnimatedCard from '../../components/card'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AntDesign from '@expo/vector-icons/AntDesign';
+
+
 import { useFocusEffect } from 'expo-router'
 const Default = () => {
     const [log, setLog] = useState(false);
@@ -25,6 +28,8 @@ const Default = () => {
         }, [])
       );
       
+      const[about, setAbout] = useState(false)
+      const[about2, setAbout2] = useState(false)
     
 
     const Option = ({content}) => {
@@ -48,28 +53,17 @@ const Default = () => {
 return (
     <SafeAreaView className='flex-1 bg-tertiary'>
         <StatusBar style='dark'/>
-        {/* <LinearGradient
-                colors={['#fff', "#9ca3af"]}
-                start={{x : 0, y:0}}
-                end={{x : 0, y : 1}}
-                className='flex-1'
-        > */}
         <ScrollView contentContainerStyle={{flexGrow : 1}} className='flex'>
             <Navbar/>
            
             <View className='flex-1 flex-col justify-end items-center m-5 gap-5'>
-                {/* <Text
-                    className='text-[35px] font-pbold text-quaternary'
+                <Text
+                    className='text-[30px] font-pbold text-quaternary'
                 >College of {'\n'}Engineering Guindy</Text>
 
-
-                <Text
-                    className='text-[30px]'
-                >
-                    Helo CEG'ians
-                </Text> */}
-
-                <AnimatedCard/>
+                <View className='flex-1 flex-row justify-center items-center'>
+                    <AnimatedCard/>
+                </View>
 
                 
                 {!log && (
@@ -90,11 +84,65 @@ return (
                             </View>
                         </View>
                     )}
-            
+
                 
+                    <View className='flex flex-col justify-center items-center my-[20px]'>
+                        <Text className='text-[20px] font-pmedium '>About</Text>
+                        <TouchableOpacity
+                            onPress={() => setAbout(!about)}
+                        >
+                            <AntDesign name={about ? "caretup" : "caretdown"} size={24} color="black" />
+                        </TouchableOpacity>
+                        {about &&
+                            <LinearGradient
+                            colors={['#fff', "#A7E0FC"]}
+                            start={{x : 0, y:0}}
+                            end={{x : 0, y : 1}}
+                            className='w-full'
+                            >
+                                <Text className='text-[17px] font-pmedium ml-3'>
+                                    The  App simplifies campus life with two key features: Lost and Found, 
+                                    where users can report or reclaim lost items, and Campus Map, which helps navigate important locations. 
+                                    Designed for convenience, it enhances accessibility and connectivity for students and faculty.
+                                </Text>
+                            </LinearGradient>
+                        }
+                    </View>
+
+                    <View className='flex flex-col justify-center items-center my-[20px]'>
+                        <Text className='text-[20px] font-pmedium'>Who are We ?</Text>
+
+                        <TouchableOpacity
+                            onPress={() => setAbout2(!about2)}
+                        >
+                            <AntDesign name={about2 ? "caretup" : "caretdown"} size={24} color="black" />
+                        </TouchableOpacity>
+                        {about2 &&
+                            <LinearGradient
+                                colors={['#fff', "#A7E0FC"]}
+                                start={{x : 0, y:0}}
+                                end={{x : 0, y : 1}}
+                                className='w-full'
+                            >
+                                <Text className='text-[17px] m-3 font-pmedium'>
+                                    We are the Technical Team of 
+                                        <Link 
+                                            href='https://www.projects.cegtechforum.in/'
+                                            className='text-primary'
+                                        > Projects & Research </Link> 
+                                    CTF Club, a initiative launched  to 
+                                    drive innovation and campus welfare projects. As a dedicated group of tech enthusiasts, we focus on 
+                                    developing solutions that enhance student life, streamline campus services, and improve overall accessibility. 
+                                    Our mission is to leverage technology for the betterment of our college community, making a meaningful impact 
+                                    through practical and efficient digital solutions.
+                                </Text>
+                            </LinearGradient>
+                        }
+                       
+                    </View>
+
             </View>
         </ScrollView>
-        {/* </LinearGradient> */}
     </SafeAreaView>
 )
 }

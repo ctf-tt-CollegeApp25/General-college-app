@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { Link } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import axios from 'axios';
-// import env from "../../env";
+import env from "../../env";
 const SignUp = () => {
 	const router = useRouter();
 	const[show, setShow] = useState(true)
@@ -33,32 +33,32 @@ const SignUp = () => {
 		resolver:zodResolver(signUpschema)
 	})
 
-	// const API_URL = env.API_URL;
+	const API_URL = env.API_URL;
 	const onSignUp = async (data) => {
-		// try{
-		// 	const response = await axios.post(`${API_URL}/register`, data)
-		// 	if(response.status === 200){
-		// 		router.push('/sign-in')
-		// 		console.log("Signed Up Successfully");
-		// 	} else {
-		// 		console.log("Error during Sign Up");
-		// 	}
+		try{
+			const response = await axios.post(`${API_URL}/register`, data)
+			if(response.status === 200){
+				router.push('/sign-in')
+				console.log("Signed Up Successfully");
+			} else {
+				console.log("Error during Sign Up");
+			}
 
-		// } catch(error){
-		// 	console.error("Error during Sign Up:", error.response?.data || error.message)
-		// }
+		} catch(error){
+			console.error("Error during Sign Up:", error.response?.data || error.message)
+		}
 	}
 
 	const Textstyle = 'text-[18px] my-2 text-secondary font-pmedium'
-	const InputStyle = 'bg-white h-[45px] w-[250px] border-[1px] border-quaternary rounded-[10px] pl-4'
+	const InputStyle = 'bg-white h-[45px] w-[300px] border-[1px] border-quaternary rounded-[10px] pl-4'
 
 	return (
 		<SafeAreaView className='flex-1 flex-row justify-center items-center bg-tertiary'>
 		<ScrollView contentContainerStyle={{flexGrow:1}} className='flex'>
 			<View className='flex-1 flex-col justify-center items-center'>
 
-				<Text className='text-secondary font-semibold text-[25px]'>
-					SIGN UP to Lost and Found
+				<Text className='text-primary font-psemibold text-[25px]'>
+					SIGN UP
 				</Text>
 
 				<View className='mt-[50px]'>
@@ -129,7 +129,7 @@ const SignUp = () => {
 						/>
 						<TouchableOpacity
 							onPress={() => setShow(!show)}
-							className='relative left-[220px] bottom-[32px]'
+							className='relative left-[270px] bottom-[32px]'
 						>
 							<Ionicons
 								name={show ? 'eye-off' : 'eye'}
@@ -156,7 +156,7 @@ const SignUp = () => {
 						/>
 						<TouchableOpacity
 							onPress={() => setShow1(!show1)}
-							className='relative left-[220px] bottom-[32px]'
+							className='relative left-[270px] bottom-[32px]'
 						>
 							<Ionicons
 								name={show1 ? 'eye-off' : 'eye'}
@@ -178,11 +178,11 @@ const SignUp = () => {
 				</View>
 
 				<View>
-					<Text className='font-pmedium text-[20px] m-[30px] text-secondary'>
+					<Text className='font-psemibold text-[20px] m-[30px] text-secondary'>
 						Already Signed In ? {'\t\t'}
 						<Link 
 							href='/sign-in'
-							className='text-primary '
+							className='text-[#A7E0FC] '
 						>Sign In</Link>
 					</Text>
 				</View>

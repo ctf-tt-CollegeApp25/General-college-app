@@ -178,7 +178,7 @@ const AddItemPage = () => {
 				<Navbar/>
 				<View className="flex-1 flex-col  items-center justify-center">
 
-					<Text className='text-[30px] font-psemibold text-quaternary text-center m-5'>Report Lost or Found</Text>
+					<Text className='text-[30px] font-psemibold text-quaternary text-center m-5'>Report</Text>
 
 					<View className='flex-1 flex-col justify-center '>
 

@@ -66,14 +66,8 @@ const RootLayout = () => {
               name="itemDescription"
               options={{
                 title: "Description",
-              }}
-          />
-          <Stack.Screen
-              name="profile"
-              options={{
-                title: "My profile",
                 headerShown: true,
-                headerBackground: () => <GradientHeader />,
+                headerBackground: () => <GradientHeader />, // Gradient for header
                 headerTintColor: "white",
               }}
           />

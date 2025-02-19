@@ -4,7 +4,7 @@ import Feather from "@expo/vector-icons/Feather";
 import { Link, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
-import env from "../env";
+import env from "../../env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = () => {
@@ -15,6 +15,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const API_URL = env.API_URL;
   const [userDetails, setUserDetails] = useState({});
+  const[log, setLog] = useState(false)
 
   const handleLogout = async () => {
 	try {
@@ -24,7 +25,8 @@ const Profile = () => {
 		  text: "OK", 
 		  onPress: () => {
 			router.replace("/");
-			setTimeout(() => router.replace("/sign-in"), 1);
+			// setTimeout(() => router.replace("/sign-in"), 1);
+      setLog(false)
 		  }
 		}
 	  ]);
@@ -36,28 +38,29 @@ const Profile = () => {
   useEffect(() => {
 	const fetchData = async () => {
 	  try {
-		const storedUserId = await AsyncStorage.getItem("userId");
-		const token = await AsyncStorage.getItem("authToken");
-		console.log(storedUserId, token);
-		if (!storedUserId || !token) {
-		  Alert.alert("Login Required", "Please log in to access your profile", [
-			{ text: "OK", onPress: () => router.replace("/sign-in") },
-		  ]);
-		  return;
-		}
-  
-		setUserId(storedUserId);
-		await fetchUserData(token);
-		await retrieveItems(storedUserId, token);
-	  } catch (error) {
-		console.error("Error retrieving user_id:", error);
-	  } finally {
-		setLoading(false);
+      const storedUserId = await AsyncStorage.getItem("userId");
+      const token = await AsyncStorage.getItem("authToken");
+      console.log(storedUserId, token);
+      if (!storedUserId || !token) {
+        // Alert.alert("Login Required", "Please log in to access your profile", [
+        // { text: "OK", onPress: () => router.replace("/") },
+        // ]);
+        setLog(false)
+        return;
+      }
+      setLog(true)
+      setUserId(storedUserId);
+      await fetchUserData(token);
+      await retrieveItems(storedUserId, token);
+      } catch (error) {
+      console.error("Error retrieving user_id:", error);
+      } finally {
+      setLoading(false);
 	  }
 	};
   
 	fetchData();
-  }, []);
+  }, [items]);
   
 
   const fetchUserData = async (token) => {
@@ -131,7 +134,8 @@ const Profile = () => {
     return (
       <SafeAreaView className="flex-1 bg-tertiary h-screen w-full">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="flex">
-          <View className="flex-1 flex-col items-center p-4 gap-[0px]">
+          {log ?
+          <View className="flex-1 flex-col items-center p-4 gap-[0px] mt-[30px]">
             {/* Header */}
             <View className="flex-row justify-between w-full px-4">
               <Text className="text-2xl font-bold text-gray-800">Profile</Text>
@@ -214,6 +218,27 @@ const Profile = () => {
               <Text className="text-white text-center">Logout</Text>
             </TouchableOpacity>
           </View>
+          :
+              <View className='flex-1 flex-col gap-[30px] justify-center items-center'>
+                    <Text className='text-[18px] font-semibold'>Please Login To View your profile</Text>
+                <View className='flex flex-col gap-[20px] '>
+                    <View>
+                        <TouchableOpacity className='h-[40px] w-[250px] bg-primary flex flex-col justify-center rounded-[10px]'>
+                            <Link className='text-white text-center' href='/sign-in'>
+                                SIGN IN
+                            </Link>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity className='h-[40px] w-[250px] bg-primary flex flex-col justify-center rounded-[10px]'>
+                            <Link className='text-white text-center' href='/sign-up'>
+                                SIGN UP
+                            </Link>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+              </View>
+          }
         </ScrollView>
       </SafeAreaView>
     );

@@ -87,8 +87,8 @@ const Home = () => {
   return (
     <SafeAreaView className="bg-tertiary h-full">
       {load ?
-      <View>
-        <View className="h-9 bg-tertiary" />
+      <View className='flex-1 mb-4'>
+        <View className="h-9 bg-tertiary mb-[50px]" />
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="bg-tertiary p-4">
           <Navbar/>
           <TouchableWithoutFeedback onPress={() => textInputRef.current?.focus()}>
@@ -147,11 +147,11 @@ const Home = () => {
               </ScrollView>
             </View>
           ))}
+        </ScrollView>
           <PlusButton
             onPress={() => router.push('/addItem')}
-            postionStyle='relative top-[650px] left-[280px]'
+            postionStyle='absolute top-[690px] left-[300px]'
           />
-        </ScrollView>
       </View>
       :<SearchIcon/>}
     </SafeAreaView>

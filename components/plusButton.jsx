@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 50, // Circle shape
-    backgroundColor: '#5700ff',
+    backgroundColor: '#4ade80',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 30,
     height: 4,
-    backgroundColor: '#eeebe5',
+    backgroundColor: '#fff',
   },
   verticalBar: {
     position: 'absolute',
     width: 4,
     height: 30,
-    backgroundColor: '#eeebe5',
+    backgroundColor: '#fff',
   },
 });
 
