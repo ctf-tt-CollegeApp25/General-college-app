@@ -7,18 +7,18 @@ const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 const LocationIcon = ({ size = 150 }) => {
-  const translateY = useSharedValue(-100); 
+  const rotateY = useSharedValue(0); 
   const opacity = useSharedValue(0); 
 
   useEffect(() => {
-    translateY.value = withRepeat(withTiming(0, { duration: 3000 }), 1, false);
+    rotateY.value = withRepeat(withTiming(360, { duration: 3000 }), 1, false);
     
     
     opacity.value = withRepeat(withTiming(1, { duration: 3000 }), 1, true);
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }],
+    transform: [{ rotateY: `${rotateY.value}deg` }],
   }));
 
   return (
