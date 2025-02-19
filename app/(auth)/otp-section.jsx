@@ -12,99 +12,116 @@ import {z} from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { router } from "expo-router";
+import SlideUpMessage from "../../components/successMessage";
 
-export default function App() {
-
-const [otpVisible, setOtpVisible] = useState(false);
-const [otp, setOtp] = useState(["", "", "", ""]); // 4-digit OTP
-const otpRefs = [useRef(null), useRef(null), useRef(null), useRef(null)]; // Refs for OTP boxes
-const[otpErr, setOtpErr] = useState('')
-
-const handleSendOTP = (data) => {
-	setOtpVisible(true); 
-};
-
-const handleOTPChange = (text, index) => {
-	const newOtp = [...otp];
-	newOtp[index] = text.replace(/[^0-9]/g, ""); // Ensure only numbers are entered
-	setOtp(newOtp);
-
-	// Automatically move to the next box if the current box is filled
-	if (text && index < otpRefs.length - 1) {
-	otpRefs[index + 1].current.focus();
-	}
-
-	// Automatically move back if the user deletes
-	if (!text && index > 0) {
-	otpRefs[index - 1].current.focus();
-	}
-};
-
-const handleVerifyOTP = () => {
-	const enteredOtp = otp.join("");
-	if (enteredOtp.length !== 4) {
-		setOtpErr( "Please enter the full 4-digit OTP.")
+export default function OTPVerification() {
+	const [otpVisible, setOtpVisible] = useState(false);
+	const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+	const otpRefs = Array(6)
+	  .fill(null)
+	  .map(() => useRef(null));
+	const [otpErr, setOtpErr] = useState("");
+	const emailRef = useRef(""); 
+	const API_URL = env.API_URL;
+  
+	const emailSchema = z.object({
+	  email: z.string().email("Invalid email address"),
+	});
+  
+	const { control, handleSubmit, formState: { errors } } = useForm({
+	  resolver: zodResolver(emailSchema),
+	});
+  
+	const handleSendOTP = async (data) => {
+	  try {
+		const response = await fetch(`${API_URL}/send`, {
+		  method: "POST",
+		  headers: { "Content-Type": "application/json" },
+		  body: JSON.stringify({ email: data.email }),
+		});
+  
+		if (response.ok) {
+		  emailRef.current = data.email;
+		  setOtpVisible(true);
+		} else {
+		  alert("Failed to send OTP");
+		}
+	  } catch (error) {
+		console.error("Error sending OTP:", error);
+	  }
+	};
+  
+	const handleOTPChange = (text, index) => {
+	  const newOtp = [...otp];
+	  newOtp[index] = text.replace(/[^0-9]/g, "");
+	  setOtp(newOtp);
+  
+	  if (text && index < otpRefs.length - 1) {
+		otpRefs[index + 1].current.focus();
+	  } else if (!text && index > 0) {
+		otpRefs[index - 1].current.focus();
+	  }
+	};
+  
+	const handleVerifyOTP = async () => {
+	  const enteredOtp = otp.join("");
+  
+	  if (enteredOtp.length !== 6) {
+		setOtpErr("Please enter the full 6-digit OTP.");
 		return;
-	}
-	setOtpErr('')
-	router.push('/forget-password')
-};
-
-	const mobileSchema = z.object({
-		contact_number : z.string()
-					.length(10, 'Phone number must be exactly 10 characters')
-					.regex(/^\d{10}$/, 'Phone number must contain only digits'),
-	})
-
-	const {control, handleSubmit, formState:{errors}} = useForm({
-		resolver : zodResolver(mobileSchema)
-	})
+	  }
+	  setOtpErr("");
+  
+	  try {
+		const response = await fetch(`${API_URL}/verify`, {
+		  method: "POST",
+		  headers: { "Content-Type": "application/json" },
+		  body: JSON.stringify({ email: emailRef.current, otp: enteredOtp }),
+		});
+  
+		const result = await response.json();
+  
+		if (response.ok) {
+		  router.push("/forget-password");
+		} else {
+		  setOtpErr("Invalid OTP. Try again.");
+		}
+	  } catch (error) {
+		console.error("Error verifying OTP:", error);
+	  }
+	};
 
 return (
 	<SafeAreaView className='flex-1 bg-tertiary flex-row justify-center items-center'>
 		<ScrollView contentContainerStyle={{ flexGrow: 1 }} className='flex'>
 			<View className='flex-1 flex-col p-4 items-center justify-center'>
-				<Text
-					className='text-[30px] relative bottom-[50px] right-[80px]'
-				>Get Your otp</Text>
-				<View className='flex flex-col items-center justify-center'>
-					<Text 
-						className='text-[20px] text-quaternary font-psemibold my-4'
-					>Enter Phone Number</Text>
-
+				<View className="mt-5 w-full px-6">
+					<Text className="text-[18px] text-quaternary font-medium">Enter Email</Text>
 					<Controller
-						control={control}
-						name="contact_number"
-						render={({field : {onChange, value}}) => (
-							<TextInput
-								className='bg-white h-[50px] w-[250px] border-[1px] border-quaternary rounded-[10px] pl-4 my-2'
-								placeholder="Phone Number"
-								keyboardType="numeric"
-								maxLength={10}
-								value={value}
-								onChangeText={onChange}
-							/>
-						)}
-					/>
-
-					{errors.contact_number && (
-						<Text className='text-red-600'>{errors.contact_number.message}</Text>
+					control={control}
+					name="email"
+					render={({ field: { onChange, value } }) => (
+						<TextInput
+						className="bg-white h-[50px] w-full border-[1px] border-gray-400 rounded-[10px] p-3 mt-2"
+						placeholder="Enter your email"
+						keyboardType="email-address"
+						autoCapitalize="none"
+						value={value}
+						onChangeText={onChange}
+						/>
 					)}
-					
-
+					/>
+					{errors.email && <Text className="text-red-600 mt-1">{errors.email.message}</Text>}
 
 					{!otpVisible && (
-						<TouchableOpacity
-							className='bg-primary h-[40px] w-[130px] rounded-[10px] justify-center my-5'
-							onPress={handleSubmit(handleSendOTP)}
-						>
-							<Text
-							className='text-white text-center'
-							>Send OTP</Text>
-
-						</TouchableOpacity>
+					<TouchableOpacity
+						className="bg-primary h-[40px] w-full rounded-[10px] justify-center mt-5"
+						onPress={handleSubmit(handleSendOTP)}
+					>
+						<Text className="text-white text-center">Send OTP</Text>
+					</TouchableOpacity>
 					)}
-				</View>
+			</View>
 
 				{/* OTP Boxes Appear Below */}
 				<View>
@@ -151,6 +168,12 @@ return (
 						</View>
 					)}
 				</View>
+
+				<SlideUpMessage
+					message='OTP has beed sent to your Email'
+					visible={success}
+					onHide={() => setSuccess(false)}
+				/>
 			</View>
 		</ScrollView>
 	</SafeAreaView>

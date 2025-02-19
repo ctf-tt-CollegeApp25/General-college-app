@@ -7,11 +7,13 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const TabsLayout = () => {
   return (
-    <Tabs screenOptions={{
+    <Tabs 
+    screenOptions={{
         tabBarActiveTintColor: '#fff',
         tabBarInactiveTintColor: '#1a1a1a',
         tabBarStyle: {
           borderTopWidth: 0,
+          height : 55,
         },
         tabBarLabelStyle: {
           fontSize: 12,

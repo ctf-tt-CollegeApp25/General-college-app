@@ -10,6 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ItemDescription = () => {
   const route = useRoute();
@@ -46,52 +47,59 @@ const ItemDescription = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-quadernary">
-      <ScrollView className="p-4">
-        <View className="bg-tertiary p-6 rounded-lg shadow-md mb-5">
-          <Image
-            source={{ uri: itemDetails.image }}
-            className="w-full h-64 rounded-lg mb-4"
-            resizeMode="cover"
-          />
-          <Text className="text-2xl text-primary font-pbold mb-4">
-            {itemDetails.item_name}
-          </Text>
-          <Text className="text-xl font-pregular mb-4">
-            <Text className="text-primary">Description: </Text>
-            <Text className="text-gray-700">{itemDetails.description}</Text>
-          </Text>
-          <Text className="text-xl font-pregular mb-4">
-            <Text className="text-primary">Username: </Text>
-            <Text className="text-gray-700">{itemDetails.user_name}</Text>
-          </Text>
-          <Text className="text-xl font-pregular mb-4">
-            <Text className="text-primary">Contact: </Text>
-            <Text className="text-gray-700">{itemDetails.contact_number}</Text>
-          </Text>
-          <Text className="text-xl font-pregular mb-4">
-            <Text className="text-primary">Special Marks: </Text>
-            <Text className="text-gray-700">{itemDetails.special_marks}</Text>
-          </Text>
-          
-          <View className="flex-row justify-between items-center mt-4">
-            <TouchableOpacity
-              className="bg-blue-500 p-4 rounded-full shadow-md flex-1 mr-2"
-              onPress={() => callNumber(itemDetails.contact_number)}
-            >
-              <Text className="text-white text-center font-medium text-lg">
-                📞 Call
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="bg-green-500 p-4 rounded-full shadow-md flex-1 mr-2"
-              onPress={() => openWhatsApp(itemDetails.contact_number)}
-            >
-              <Text className="text-white text-center font-medium text-lg">
-                💬 WhatsApp
-              </Text>
-            </TouchableOpacity>
-          </View>
+    <SafeAreaView className="flex-1 bg-white">
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="p-4">
+        <View className="shadow-lg rounded-xl overflow-hidden">
+          <LinearGradient
+            colors={['#bae6fd', '#38bdf8']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            className="p-6 rounded-xl"
+          >
+            <Image
+              source={{ uri: itemDetails.image }}
+              className="w-full h-64 rounded-xl mb-4"
+              resizeMode="cover"
+            />
+            <Text className="text-2xl font-pbold text-white mb-4">
+              {itemDetails.item_name}
+            </Text>
+            <Text className="text-lg font-pmedium text-white mb-2">
+              <Text className="font-psemibold">Description: </Text>
+              {itemDetails.description}
+            </Text>
+            <Text className="text-lg font-pmedium text-white mb-2">
+              <Text className="font-psemibold">Username: </Text>
+              {itemDetails.user_name}
+            </Text>
+            <Text className="text-lg font-pmedium text-white mb-2">
+              <Text className="font-psemibold">Contact: </Text>
+              {itemDetails.contact_number}
+            </Text>
+            <Text className="text-lg font-pmedium text-white mb-2">
+              <Text className="font-psemibold">Special Marks: </Text>
+              {itemDetails.special_marks}
+            </Text>
+
+            <View className="flex-row justify-between items-center mt-6">
+              <TouchableOpacity
+                className="bg-white p-4 rounded-full flex-1 mr-2 shadow-md"
+                onPress={() => callNumber(itemDetails.contact_number)}
+              >
+                <Text className="text-blue-600 text-center font-psemibold text-lg">
+                  📞 Call
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className="bg-white p-4 rounded-full flex-1 shadow-md"
+                onPress={() => openWhatsApp(itemDetails.contact_number)}
+              >
+                <Text className="text-green-600 text-center font-psemibold text-lg">
+                  💬 WhatsApp
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </LinearGradient>
         </View>
       </ScrollView>
     </SafeAreaView>
