@@ -12,7 +12,6 @@ expo-env.d.ts
 app.config.js
 
 # environment config
-env.js
 # Native
 *.orig.*
 *.jks

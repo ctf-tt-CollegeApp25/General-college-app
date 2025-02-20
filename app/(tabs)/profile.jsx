@@ -40,7 +40,7 @@ const Profile = () => {
 	  try {
       const storedUserId = await AsyncStorage.getItem("userId");
       const token = await AsyncStorage.getItem("authToken");
-      console.log(storedUserId, token);
+      // console.log(storedUserId, token);
       if (!storedUserId || !token) {
         // Alert.alert("Login Required", "Please log in to access your profile", [
         // { text: "OK", onPress: () => router.replace("/") },
