@@ -18,7 +18,7 @@ const Home = () => {
   });
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100">
+    <View className="flex-1 justify-center items-center bg-white">
       <View className="relative w-[300px] h-[230px]">
         <Image
           source={require('../assets/images/fingerprint.png')} 
@@ -48,7 +48,7 @@ const Home = () => {
           ]}
         />
 
-        <Text className='text-center text-[#38bdf8] font-psemibold text-[18px] mt-[20px]'>CEG TECH FORUM</Text>
+        <Text className='text-center text-[#38bdf8] font-psemibold text-[20px] mt-[30px]'>CEG TECH FORUM</Text>
 
       </View>
     </View>

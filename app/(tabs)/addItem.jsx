@@ -173,8 +173,8 @@ const AddItemPage = () => {
 
 
 	return (
-		<SafeAreaView className="flex-1 bg-tertiary flex-col justify-center items-center">
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }} className="flex">
+		<SafeAreaView className="flex-1 bg-tertiary flex-col">
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} className="flex" showsVerticalScrollIndicator={false}>
 				<Navbar/>
 				<View className="flex-1 flex-col  items-center justify-center">
 

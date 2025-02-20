@@ -109,7 +109,7 @@ return (
                         }
                     </View>
 
-                    <View className='flex flex-col justify-center items-center my-[20px]'>
+                    <View className='flex flex-col justify-center items-center my-[20px] '>
                         <Text className='text-[20px] font-pmedium'>Who are We ?</Text>
 
                         <TouchableOpacity

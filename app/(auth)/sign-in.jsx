@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -8,6 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { z } from 'zod';
 import axios from 'axios';
 import env from "../../env";
+import { Ionicons } from '@expo/vector-icons'
+
 const validationSchema = z.object({
   email_id: z.string().email('Invalid email address'),
   password: z
@@ -25,7 +27,9 @@ const SignIn = () => {
   } = useForm({
     resolver: zodResolver(validationSchema),
   });
+
   const API_URL = env.API_URL;
+  
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(`${API_URL}/login`, data);
@@ -53,6 +57,8 @@ const SignIn = () => {
     }
   };
 
+  const[show, setShow] = useState(false)
+
   return (
     <SafeAreaView className="bg-tertiary h-full">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="bg-tertiary p-4">
@@ -70,7 +76,7 @@ const SignIn = () => {
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
-                    className="w-[300px] h-12 border-2 border-secondary rounded-xl px-2 mt-2 bg-white"
+                    className="w-[300px] h-12 border-2 border-secondary rounded-xl pl-4 mt-2 bg-white"
                     placeholder="Enter your email"
                     placeholderTextColor="black"
                     onBlur={onBlur}
@@ -89,16 +95,25 @@ const SignIn = () => {
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
-                    className="w-[300px] h-12 border-2 border-secondary rounded-xl px-2 mt-2 bg-white"
+                    className="w-[300px] h-12 border-2 border-secondary rounded-xl pl-4 mt-2 bg-white"
                     placeholder="Enter your password"
                     placeholderTextColor="black"
-                    secureTextEntry
+									  secureTextEntry={show}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
                   />
                 )}
               />
+              <TouchableOpacity
+                            onPress={() => setShow(!show)}
+                            className='relative left-[270px] bottom-[32px]'
+                          >
+                            <Ionicons
+                              name={show ? 'eye-off' : 'eye'}
+                              size={20}
+                            />
+              </TouchableOpacity>
               {errors.password && <Text className="text-red-500 mt-1">{errors.password.message}</Text>}
             </View>
           </View>

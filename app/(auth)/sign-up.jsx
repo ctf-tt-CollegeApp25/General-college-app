@@ -49,7 +49,7 @@ const SignUp = () => {
 		}
 	}
 
-	const Textstyle = 'text-[18px] my-2 text-secondary font-pmedium'
+	const Textstyle = 'text-[18px] my-2 text-black font-pmedium'
 	const InputStyle = 'bg-white h-[45px] w-[300px] border-[1px] border-quaternary rounded-[10px] pl-4'
 
 	return (
@@ -169,7 +169,7 @@ const SignUp = () => {
 					</View>
 					<View className='flex mt-7 flex-row justify-center items-center'>
 						<TouchableOpacity
-							className='bg-primary h-[40px] w-[100px] justify-center rounded-[10px]'
+							className='bg-primary h-[40px] w-[300px] justify-center rounded-[10px]'
 							onPress={handleSubmit(onSignUp)}
 						>
 							<Text className='text-center text-white'>Sign Up</Text>
@@ -178,7 +178,7 @@ const SignUp = () => {
 				</View>
 
 				<View>
-					<Text className='font-psemibold text-[20px] m-[30px] text-secondary'>
+					<Text className='font-psemibold text-[20px] m-[30px] text-black'>
 						Already Signed In ? {'\t\t'}
 						<Link 
 							href='/sign-in'

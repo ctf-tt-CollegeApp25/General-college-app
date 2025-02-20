@@ -16,11 +16,11 @@ import env from '../../env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchIcon from '../../components/search';
 import { useFocusEffect } from 'expo-router';
-
 import PlusButton from '../../components/plusButton'
 import { router } from 'expo-router';
 import Navbar from '../../components/navbar';
 import { LinearGradient } from 'expo-linear-gradient';
+
 const Home = () => {
   const API_URL = env.API_URL;
   const navigation = useNavigation();
@@ -85,14 +85,14 @@ const Home = () => {
 
 
   return (
-    <SafeAreaView className="bg-tertiary h-full">
+    <SafeAreaView className="bg-tertiary h-screen">
       {load ?
       <View className='flex-1 mb-4'>
-        <View className="h-9 bg-tertiary mb-[50px]" />
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="bg-tertiary p-4">
+        <View className="h-9 bg-tertiary mb-1" />
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="bg-tertiary flex" showsVerticalScrollIndicator={false}>
           <Navbar/>
           <TouchableWithoutFeedback onPress={() => textInputRef.current?.focus()}>
-            <View className="flex flex-row bg-white w-full h-12 rounded-lg px-2 mt-4 mb-4 items-center justify-between border-secondary border-2">
+            <View className="flex flex-row bg-white w-[320px] h-12 rounded-lg px-2 mt-4 mb-4 ml-4 items-center justify-between border-secondary border-2">
               <TextInput
                 ref={textInputRef}
                 onChangeText={(text) => setSearchItem(text)}
@@ -104,7 +104,7 @@ const Home = () => {
             </View>
           </TouchableWithoutFeedback>
           {sortedDateKeys.map((dateKey) => (
-            <View key={dateKey} className="mb-6">
+            <View key={dateKey} className="mb-6 ml-4">
               <Text className="text-xl font-pbold text-primary mb-4">
                 {formatDisplayDate(dateKey)}
               </Text>
@@ -148,11 +148,7 @@ const Home = () => {
             </View>
           ))}
         </ScrollView>
-          <PlusButton
-            onPress={() => router.push('/addItem')}
-            postionStyle='absolute top-[690px] left-[300px]'
-          />
-      </View>
+       </View>
       :<SearchIcon/>}
     </SafeAreaView>
   );

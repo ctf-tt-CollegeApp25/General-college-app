@@ -59,7 +59,7 @@ const CampusMap = () => {
     return (
         <SafeAreaView className='flex-1 flex-row justify-center items-center bg-tertiary'>
             {load ?
-            <ScrollView contentContainerStyle={{flexGrow : 1}} className='flex'>
+            <ScrollView contentContainerStyle={{flexGrow : 1}} className='flex' showsVerticalScrollIndicator={false}>
                 <Navbar/>
                 <View
                     className='flex-1 flex-col items-center'

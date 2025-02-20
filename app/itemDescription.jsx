@@ -17,7 +17,7 @@ const ItemDescription = () => {
   const { itemDetails } = route.params;
 
   const openWhatsApp = (phoneNumber) => {
-    const whatsappURL = `whatsapp://send?phone=${phoneNumber}`;
+    const whatsappURL = `https://wa.me/${phoneNumber}`;
     Linking.canOpenURL(whatsappURL)
       .then((supported) => {
         if (supported) {
@@ -47,7 +47,7 @@ const ItemDescription = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white h-screen">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="p-4">
         <View className="shadow-lg rounded-xl overflow-hidden mt-[70px]">
           <LinearGradient
@@ -83,18 +83,18 @@ const ItemDescription = () => {
 
             <View className="flex-row justify-between items-center mt-6">
               <TouchableOpacity
-                className="bg-white p-4 rounded-full flex-1 mr-2 shadow-md"
+                className="bg-primary p-4 rounded-full flex-1 mr-2 shadow-md"
                 onPress={() => callNumber(itemDetails.contact_number)}
               >
-                <Text className="text-blue-600 text-center font-psemibold text-lg">
+                <Text className="text-quaternary text-center font-psemibold text-lg">
                   📞 Call
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="bg-white p-4 rounded-full flex-1 shadow-md"
+                className="bg-primary p-4 rounded-full flex-1 shadow-md"
                 onPress={() => openWhatsApp(itemDetails.contact_number)}
               >
-                <Text className="text-green-600 text-center font-psemibold text-lg">
+                <Text className="text-quaternary text-center font-psemibold text-lg">
                   💬 WhatsApp
                 </Text>
               </TouchableOpacity>
